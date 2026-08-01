@@ -1,47 +1,96 @@
 ---
 title: "Quickstart"
-description: "Begin with a guide on the fastest path to a successful outcome"
+description: "Get Orbit running locally with Docker or a native setup"
 ---
 
-Describe how someone begins using your product. What is the first thing they need to do? Are there any prerequisites?
-
-A quickstart should take someone from zero to using your product. They'll get a quick win and a sense of what they can accomplish.
+This guide gets you from a fresh clone to a running Orbit instance with demo data, using either Docker or a native PHP/Node setup.
 
 ## Prerequisites
 
-Before you begin, you must have:
+Before you begin, you must have one of the following:
 
-- Requirement one (for example, Node.js 18+, a free account, an API key)
-- Requirement two (for example, a compatible device, a compatible browser, a compatible operating system)
+- **Docker** and Docker Compose (recommended — no local PHP or Node install needed), or
+- **PHP 8.4+** with Composer, and **Node.js** with npm, if you'd rather run Orbit natively
 
 ## Get started
 
-<Steps>
-  <Step title="Install">
-    Describe how to install your product or sign up.
+<Tabs>
+  <Tab title="Docker">
+    <Steps>
+      <Step title="Clone the repository">
+        ```bash
+        git clone https://github.com/orbit-collective/orbit.git
+        cd orbit
+        ```
+      </Step>
+      <Step title="Run the setup target">
+        The `Makefile` wraps Docker Compose. `make setup` builds the `app` and `vite` images, boots them, and bootstraps `.env`, the SQLite database file, the app key, and migrations for you.
 
-    ```bash
-    npm install your-package
-    ```
-  </Step>
-  <Step title="Configure">
-    Describe any setup or configuration needed before first use.
+        ```bash
+        make setup
+        ```
+      </Step>
+      <Step title="Start the app">
+        ```bash
+        make up
+        ```
 
-    ```bash
-    your-cli init
-    ```
-  </Step>
-  <Step title="Run it">
-    Show the first thing a user does to see it working.
+        The app serves at [http://localhost:8000](http://localhost:8000) with Vite HMR on port `5173`. Use `make dev` instead of `make up` to run in the foreground and watch logs.
+      </Step>
+      <Step title="Seed demo data (optional)">
+        ```bash
+        make fresh
+        ```
 
-    ```bash
-    your-cli start
-    ```
-  </Step>
-</Steps>
+        This runs `migrate:fresh --seed`, giving you demo projects, issues, and users to explore instead of an empty workspace.
+      </Step>
+    </Steps>
+
+    <Tip>
+      `make shell` opens a shell in the `app` container, and `make tinker` opens a Laravel Tinker session — useful for inspecting data without leaving Docker.
+    </Tip>
+  </Tab>
+  <Tab title="Native (PHP + Node)">
+    <Steps>
+      <Step title="Clone the repository">
+        ```bash
+        git clone https://github.com/orbit-collective/orbit.git
+        cd orbit
+        ```
+      </Step>
+      <Step title="Run the setup script">
+        `composer setup` installs Composer and npm dependencies, copies `.env.example` to `.env`, generates an app key, runs migrations, and builds frontend assets.
+
+        ```bash
+        composer setup
+        ```
+      </Step>
+      <Step title="Start the dev environment">
+        `composer dev` runs the Laravel dev server, a queue listener, log tailing (`pail`), and the Vite dev server together.
+
+        ```bash
+        composer dev
+        ```
+
+        The app serves at [http://localhost:8000](http://localhost:8000).
+      </Step>
+      <Step title="Seed demo data (optional)">
+        ```bash
+        php artisan migrate:fresh --seed
+        ```
+      </Step>
+    </Steps>
+  </Tab>
+</Tabs>
+
+## Create your first project
+
+Once Orbit is running:
+
+1. Register an account at `/register`. The **first account created becomes an admin**; everyone who registers after that is a regular member.
+2. Follow the onboarding prompts to create your first project — give it a name, description, and color.
+3. Open the project and create an issue to see the List, Board, and Calendar views in action.
 
 <Tip>
-  Give people a way to get help. This could be a link to a support page, a chat with a customer support agent, or a forum for your product.
-
-  Example: Need help? Reach out to us at [support@yourcompany.com](mailto:support@yourcompany.com).
+  Need help? Open an issue on [GitHub](https://github.com/orbit-collective/orbit/issues).
 </Tip>
