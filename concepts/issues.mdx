@@ -24,7 +24,18 @@ An issue is the unit of work in Orbit. Every issue belongs to a single [project]
 
 ## Status lifecycle
 
-Issues move through three statuses:
+Issues move through three statuses. There's no enforced one-way workflow — you can set any status directly from any other, whether by editing the field or dragging a card on the Board view:
+
+```mermaid
+stateDiagram-v2
+    [*] --> Open
+    Open --> InProgress: In Progress
+    InProgress --> Closed
+    Open --> Closed
+    Closed --> Open
+    Closed --> InProgress: In Progress
+    InProgress --> Open
+```
 
 <Steps>
   <Step title="Open">

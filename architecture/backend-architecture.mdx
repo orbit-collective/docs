@@ -5,6 +5,16 @@ description: "Controller → Service → Repository, and how the layers divide r
 
 Every domain in Orbit's backend — issues, projects, users, activity logs — follows the same three-layer split, wired together with constructor injection.
 
+```mermaid
+flowchart LR
+    A[HTTP request] --> B[Controller]
+    B -->|validates, delegates| C[Service]
+    C -->|business logic| D[Repository]
+    D -->|Eloquent queries| E[(Database)]
+    C -->|side effects| F[Activity log / Notifications]
+    B -->|Inertia response or redirect| G[Frontend]
+```
+
 <Steps>
   <Step title="Controller">
     Lives in `app/Http/Controllers/`. Validates the incoming request, delegates to a service, and returns either an Inertia response or `redirect()->back()`. Controllers don't contain business logic or query building.
