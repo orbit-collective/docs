@@ -20,9 +20,12 @@
       {
         "group": "Core Concepts",
         "pages": [
+          "concepts/account",
           "concepts/projects",
           "concepts/issues",
           "concepts/comments",
+          "concepts/dashboard",
+          "concepts/activity-log",
           "concepts/notifications",
           "concepts/saved-filters"
         ]

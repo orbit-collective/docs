@@ -1,0 +1,36 @@
+---
+title: "Dashboard"
+description: "A workspace-wide overview of every project and issue"
+---
+
+The dashboard is Orbit's home page — it summarizes activity across **every** project you can see, rather than scoping to one project at a time like the [List, Board, and Calendar views](/guides/views) do.
+
+## Stat cards
+
+Four tiles summarize the whole workspace at a glance, computed from every issue across every project:
+
+| Card | Shows |
+| --- | --- |
+| Active Projects | Total number of projects |
+| Open Issues | Issues not yet closed (`open` + `in_progress`) |
+| Critical Tasks | Issues with `High` priority |
+| Resolution Rate | Percentage of all issues that are `Closed`, with a progress bar |
+
+## Visual breakdown cards
+
+Below the stat cards, three more cards visualize the same issue set from different angles:
+
+- **Completion ratio** — a ring chart showing the percentage of all issues that are closed, with a row of raw counts underneath for Open, In Progress, Closed, and Total.
+- **Priority breakdown** — a single stacked bar split by High/Medium/Low priority, with a legend showing the count and percentage for each.
+- **Productivity trend** — a 7-day bar chart (Monday through Sunday) of how many issues were updated each day **this week**. Today's bar is highlighted. This is the one chart on the dashboard that's time-scoped — the others reflect all issues regardless of when they were last touched.
+
+## Recent work and projects directory
+
+The bottom of the dashboard splits into two columns:
+
+- **Recent Work Activity** — the first 20 issues across the workspace, shown in the same table used by the List view.
+- **Projects Directory** — up to 3 of your projects, with a link to view all of them if you have more. If you have none yet, this shows a prompt to create your first one instead.
+
+<Note>
+  "Recent Work Activity" here refers to the issue table, not the internal per-project [activity log](/concepts/activity-log) — the two are unrelated, despite the similar name.
+</Note>

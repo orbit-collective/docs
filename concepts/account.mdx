@@ -1,0 +1,28 @@
+---
+title: "Account"
+description: "Registering, signing in, and what account management looks like today"
+---
+
+## Registering
+
+Anyone can register a new account from the sign-up page. Orbit validates:
+
+| Field | Rule |
+| --- | --- |
+| Name | Required, up to 255 characters |
+| Email | Required, valid email format, must be lowercase, up to 255 characters, must be unique across all accounts |
+| Password | Required, must be confirmed (entered twice), must meet Laravel's default password rules |
+
+The very first account ever registered becomes an [admin](/guides/roles-and-permissions); every account after that is a regular member.
+
+## Signing in and out
+
+Sign in with your email and password. Signing out is a single click — Orbit doesn't ask you to confirm before ending your session.
+
+## Changing your profile or avatar
+
+<Warning>
+  There is currently no way to change your name, email, password, or avatar after registering, and no way to delete your account, through the app itself. The backend has an unused method for updating a profile and uploading an avatar, but it isn't connected to any route or page yet — so today, whatever you enter at registration is permanent from the UI's perspective.
+</Warning>
+
+If you need to correct account details today, that requires updating the record directly in the database rather than through Orbit's interface.
