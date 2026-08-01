@@ -1,0 +1,36 @@
+---
+title: "Writing issue descriptions"
+description: "Formatting support in the issue description editor"
+---
+
+An [issue's](/concepts/issues) description supports rich text formatting, written and stored as markdown.
+
+<Note>
+  This applies to issue descriptions only. [Comments](/concepts/comments) are plain text — no formatting is applied to comment bodies.
+</Note>
+
+## How formatting works
+
+There's no toolbar with bold/italic/heading buttons — formatting happens through markdown shortcuts as you type, the same way it would in a markdown file:
+
+| Type | Get |
+| --- | --- |
+| `**text**` | **Bold** |
+| `*text*` | *Italic* |
+| `# `, `## `, `### ` at the start of a line | Heading levels |
+| `- ` at the start of a line | Bullet list |
+| `1. ` at the start of a line | Numbered list |
+| `` `code` `` | Inline code |
+| ` ``` ` on its own line | Code block |
+| `> ` at the start of a line | Blockquote |
+| `- [ ] ` at the start of a line | Checklist item |
+
+The editor also supports tables, though there's no button or shortcut currently exposed to insert one from scratch.
+
+## Editing and viewing
+
+Click a description to edit it; click away (or otherwise commit the change) to save it and return to a read-only view. The same editor renders both states — there's no separate "preview" component — so what you see while editing is what other people will see once you're done.
+
+## Images
+
+The editor has image support built in, but there's currently no way to actually add an image through the UI — no upload button, no paste-to-insert, no drag-and-drop. Don't tell users they can drop an image into a description; that path doesn't exist yet.

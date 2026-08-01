@@ -1,0 +1,31 @@
+---
+title: "Keyboard shortcuts"
+description: "Move around Orbit without touching the mouse"
+---
+
+Orbit registers a small set of global keyboard shortcuts, available anywhere in the app.
+
+## Available shortcuts
+
+| Shortcut | Does |
+| --- | --- |
+| `?` or `/` | Open the keyboard shortcuts help modal |
+| `Alt` + `P` | Go to Projects |
+| `Alt` + `B` | Go to the Dashboard |
+| `Ctrl` + `F` | Focus the page's search input |
+
+<Note>
+  `Ctrl+K` is currently wired to the same help modal as `?` and `/`, rather than a separate command palette — if you're expecting a distinct "jump to anything" command palette bound to `Ctrl+K`, that doesn't exist yet; it just opens the shortcuts list.
+</Note>
+
+<Warning>
+  Shortcuts use `Ctrl` and `Alt` literally, on every platform — there is currently no `Cmd`-based equivalent on macOS. Pressing `Cmd+K` on a Mac does not trigger anything; you need the physical `Ctrl` key.
+</Warning>
+
+## The shortcuts help modal
+
+Press `?` or `/` anywhere to open a searchable list of every shortcut, grouped by category, with each key combo shown as a keycap-style badge. Use `↑`/`↓` to move through the list, `↵` to run the highlighted shortcut, and `Esc` to close it.
+
+## When shortcuts don't fire
+
+Shortcuts are suppressed while your focus is inside a text input, a text area, or any editable content area — so typing `p` while writing an issue description won't send you to the Projects page. `Esc` is the one exception: it always fires, even while you're typing.

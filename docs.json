@@ -36,7 +36,9 @@
           "guides/views",
           "guides/filtering-and-search",
           "guides/roles-and-permissions",
-          "guides/onboarding"
+          "guides/onboarding",
+          "guides/keyboard-shortcuts",
+          "guides/rich-text-editing"
         ]
       },
       {
