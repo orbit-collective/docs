@@ -1,0 +1,59 @@
+---
+title: "Issues"
+description: "The unit of work in Orbit — tracked from open to closed"
+---
+
+An issue is the unit of work in Orbit. Every issue belongs to a single [project](/concepts/projects) and moves through a status lifecycle as work progresses.
+
+## Fields
+
+| Field | Description |
+| --- | --- |
+| Title | Required short summary |
+| Description | Optional long-form text, written in the rich text editor |
+| Status | `Open`, `In Progress`, or `Closed` |
+| Priority | `Low`, `Medium`, or `High` |
+| Labels | Zero or more of: `Bug`, `Feature`, `Performance`, `Design`, `UX`, `Chore` |
+| Creator | The user who created the issue — set automatically, not editable |
+| Assignee | The user responsible for resolving it — optional |
+| Start date / End date | An optional date range for planning or calendar placement |
+
+<Note>
+  If you set both a start date and an end date, the end date must be on or after the start date. Orbit enforces this both in the form and at the database level.
+</Note>
+
+## Status lifecycle
+
+Issues move through three statuses:
+
+<Steps>
+  <Step title="Open">
+    The default status for a newly created issue. Nothing has started yet.
+  </Step>
+  <Step title="In Progress">
+    Work has started. Move an issue here by editing its status, or by dragging its card between columns on the Board view.
+  </Step>
+  <Step title="Closed">
+    The issue is resolved. Closing an issue doesn't delete it or its comments — it stays in the project's history.
+  </Step>
+</Steps>
+
+## Labels vs. priority vs. status
+
+These three fields answer different questions, and it's easy to conflate them:
+
+- **Status** answers "where is this in its lifecycle?" — every issue has exactly one.
+- **Priority** answers "how urgent is this?" — every issue has exactly one (defaults to Medium).
+- **Labels** answer "what kind of work is this?" — an issue can have any number of labels, including none.
+
+## Assignment and notifications
+
+Assigning an issue to someone — at creation or later — sends them an [in-app notification](/concepts/notifications). Reassigning notifies both the person who lost the issue and the person who gained it. If you update an issue that already has an assignee, that assignee is notified of the change too, unless the change is the assignment itself.
+
+## Viewing and editing an issue
+
+Every issue has its own page, showing its full description, properties, and [comment thread](/concepts/comments). Fields like status, priority, assignee, and labels are editable inline from this page or from the project's List and Board views.
+
+## Deleting issues
+
+Issues can be deleted individually or in bulk (selecting several from the List view and deleting them together). Deleting an issue also removes its comments.

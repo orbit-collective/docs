@@ -16,6 +16,16 @@
           "index",
           "quickstart"
         ]
+      },
+      {
+        "group": "Core Concepts",
+        "pages": [
+          "concepts/projects",
+          "concepts/issues",
+          "concepts/comments",
+          "concepts/notifications",
+          "concepts/saved-filters"
+        ]
       }
     ]
   },

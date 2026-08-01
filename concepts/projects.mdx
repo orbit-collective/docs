@@ -1,0 +1,31 @@
+---
+title: "Projects"
+description: "The top-level container for issues in Orbit"
+---
+
+A project is the top-level container in Orbit. Every issue, saved filter, and activity log entry belongs to exactly one project.
+
+## Fields
+
+- **Name** — the project's display name
+- **Slug** — a URL-friendly identifier generated automatically from the name when the project is created
+- **Description** — optional free text
+- **Color** — one of ten fixed colors (red, orange, yellow, green, lime, blue, sky, violet, purple, pink), used to visually distinguish projects in lists and the sidebar
+
+<Note>
+  The slug is generated once, from the name, at creation time. Renaming a project later does not regenerate its slug.
+</Note>
+
+## Table columns
+
+Each project has its own configurable set of visible columns for its issue list view. You can show or hide: ID, title, status, assignee, priority, labels, updated date, start date, and end date. This preference is stored per project, so two projects can show different columns.
+
+## What belongs to a project
+
+- **[Issues](/concepts/issues)** — every issue is created inside a specific project
+- **[Saved filters](/concepts/saved-filters)** — reusable filter combinations, scoped to the project they were created in
+- **Activity log** — a running audit trail of actions taken within the project (issues created/updated/deleted, comments added, columns changed, and so on)
+
+## Creating a project
+
+Any authenticated user can create a project. The first project in a brand-new Orbit workspace is created as part of the guided onboarding flow shown to the first (admin) account.
