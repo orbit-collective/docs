@@ -1,0 +1,36 @@
+---
+title: "Configuration"
+description: "Environment variables that matter when setting up Orbit"
+---
+
+Orbit is configured entirely through a standard Laravel `.env` file. This page covers the variables you're likely to actually touch — the rest of `.env.example` is framework boilerplate you can leave at its default.
+
+## Application
+
+| Variable | Notes |
+| --- | --- |
+| `APP_NAME` | Defaults to `Laravel` in `.env.example` — rename it to `Orbit` (or your instance's name) |
+| `APP_ENV` | `local` for development, `production` for a real deployment |
+| `APP_KEY` | Generate with `php artisan key:generate` — never share this or commit it |
+| `APP_DEBUG` | `true` locally; **must** be `false` in production, or error pages leak stack traces and environment details |
+| `APP_URL` | The base URL Orbit is served from |
+
+## Database
+
+Orbit defaults to SQLite (`DB_CONNECTION=sqlite`, backed by `database/database.sqlite`) — no other configuration is required for local development. For MySQL or PostgreSQL, switch `DB_CONNECTION` and set the standard `DB_HOST`, `DB_PORT`, `DB_DATABASE`, `DB_USERNAME`, and `DB_PASSWORD` variables.
+
+## Session, cache, and queue
+
+All three default to the `database` driver (`SESSION_DRIVER`, `CACHE_STORE`, `QUEUE_CONNECTION`), which needs no extra infrastructure — just a migrated database. Redis (`REDIS_HOST`, `REDIS_PORT`, `REDIS_PASSWORD`) and Memcached (`MEMCACHED_HOST`) variables are present in `.env.example` if you'd rather run one of those instead, but neither is required.
+
+## File storage
+
+`FILESYSTEM_DISK=local` is used for user avatar uploads. If you want avatars stored on S3 instead, set `FILESYSTEM_DISK=s3` and fill in `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `AWS_DEFAULT_REGION`, and `AWS_BUCKET`.
+
+## Mail and broadcasting
+
+`MAIL_MAILER=log` and `BROADCAST_CONNECTION=log` are Laravel framework defaults present in `.env.example`. Orbit's own [notifications](/concepts/notifications) are in-app only — nothing in the app currently sends mail or broadcasts over a websocket connection, so these variables don't need to be configured for any of Orbit's features to work.
+
+## Frontend
+
+`VITE_APP_NAME="${APP_NAME}"` mirrors `APP_NAME` into the frontend build — update `APP_NAME` and this follows automatically.

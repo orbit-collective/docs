@@ -1,0 +1,75 @@
+---
+title: "Production deployment"
+description: "Taking Orbit from local development to a real deployment"
+---
+
+Orbit doesn't require any infrastructure beyond what a standard Laravel app needs — a database, a web server, and (if you're using queued jobs) a process to run them. There's no separate frontend to deploy or API to stand up.
+
+## Environment
+
+<Steps>
+  <Step title="Set production environment variables">
+    In `.env` (or your platform's environment variable configuration):
+
+    ```bash
+    APP_ENV=production
+    APP_DEBUG=false
+    APP_URL=https://your-domain.example
+    ```
+
+    Generate a fresh `APP_KEY` for production — don't reuse a development key:
+
+    ```bash
+    php artisan key:generate
+    ```
+  </Step>
+  <Step title="Point at a production-grade database">
+    SQLite is fine for local development, but for production, switch to MySQL or PostgreSQL — see [Configuration](/deployment/configuration#database) for the variables to set.
+  </Step>
+  <Step title="Configure mail if you plan to add it">
+    Orbit's notifications are in-app only today (see [Notifications](/concepts/notifications)), so `MAIL_MAILER` doesn't need to be configured for any current feature to work. Leave it as-is unless you're extending Orbit yourself.
+  </Step>
+</Steps>
+
+## Build and deploy
+
+<Steps>
+  <Step title="Install dependencies without dev tooling">
+    ```bash
+    composer install --no-dev --optimize-autoloader
+    npm ci
+    npm run build
+    ```
+  </Step>
+  <Step title="Run migrations">
+    ```bash
+    php artisan migrate --force
+    ```
+
+    <Warning>
+      Don't run `migrate:fresh` in production — it drops all tables first. That command is for local/demo data only.
+    </Warning>
+  </Step>
+  <Step title="Cache framework configuration">
+    ```bash
+    php artisan config:cache
+    php artisan route:cache
+    php artisan view:cache
+    ```
+  </Step>
+  <Step title="Serve the app">
+    Point Nginx or Apache with PHP-FPM at the `public/` directory, or run the app's Docker image directly — see [Docker](/deployment/docker) for the container setup, which is suitable for production as well as local development.
+  </Step>
+</Steps>
+
+## Running the queue
+
+Session, cache, and queue all default to the `database` driver. If you rely on queued jobs, run a queue worker under a process supervisor (such as `supervisord` or systemd) rather than the `queue:listen` command used in local development, so it restarts automatically:
+
+```bash
+php artisan queue:work
+```
+
+## What Orbit doesn't need
+
+Since Orbit has no public API (see [Tech stack](/architecture/tech-stack#why-no-api)) and no broadcasting or mail-driven features in active use, you don't need to provision a websocket server, a transactional email provider, or API rate limiting for Orbit's current feature set to work in production.

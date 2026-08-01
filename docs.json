@@ -44,6 +44,14 @@
           "architecture/frontend-architecture",
           "architecture/database-schema"
         ]
+      },
+      {
+        "group": "Deployment",
+        "pages": [
+          "deployment/configuration",
+          "deployment/docker",
+          "deployment/production"
+        ]
       }
     ]
   },
