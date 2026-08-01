@@ -1,0 +1,44 @@
+---
+title: "Frontend architecture"
+description: "Inertia pages, atomic-design components, and where shared logic lives"
+---
+
+The frontend is React 19 with TypeScript, rendered through Inertia rather than fetched from an API.
+
+## Pages
+
+Inertia resolves a page by name: a controller call like `Inertia::render('Dashboard', [...])` matches `resources/js/Pages/Dashboard.tsx`. The array of props the controller passes in becomes that page component's props — there's no separate client-side data fetch for the page's initial data.
+
+Orbit's pages: `Dashboard`, `Projects/Index`, `Projects/Show` (the main project workspace — filter bar plus the List/Board/Calendar switcher), `Issues/Show` (a single issue's detail page), and `Auth/Login` / `Auth/Register`.
+
+## Layouts
+
+`GuestLayout` wraps the unauthenticated auth pages. `MainLayout` wraps everything else — sidebar, top navigation, and the current project/view context passed down to child pages.
+
+## Components: atomic design
+
+Components are organized by composability, each in its own folder with a colocated test file (`Button/Button.tsx`, `Button/Button.test.tsx`):
+
+- **Atoms** — the smallest building blocks: `Button`, `Input`, `Badge`, `Avatar`, `Icon`, and so on
+- **Molecules** — small combinations of atoms: `CommentForm`, `FilterDropdown`, `ProjectCard`, `NotificationItem`
+- **Organisms** — larger, feature-level components: `IssueBoard`, `IssueTable`, `Sidebar`, `NewIssueModal`, `DashboardVisuals`
+
+The composition rule is one-directional: organisms use molecules, molecules use atoms — never the reverse.
+
+## Shared state and logic
+
+- **Context** (`resources/js/context/`) — `AlertContext` for toast messages (including flash messages from a redirect), `ModalContext` for orchestrating whichever modal is currently open, `ShortcutContext` for keyboard shortcuts
+- **Hooks** (`resources/js/hooks/`) — `useSavedFilters` wraps saved-filter CRUD and applying a filter's query params; `useTableResizing` handles resizable columns in the List view
+- **Types** (`resources/js/types/`) — shared domain types (`Issues.ts`, `Projects.ts`, `Users.ts`, `Notification.ts`) and shared page-prop types
+
+<Warning>
+  Some fields in `types/Issues.ts` (like `milestone`, `sprint`, or `attachments_count`) aren't backed by any database column — they're speculative additions to the type that don't reflect a real, working feature. Don't take the presence of a TypeScript field as confirmation a feature exists; check the `issues` table and `IssueController` before documenting or relying on it.
+</Warning>
+
+## Styling
+
+Tailwind CSS, with `class-variance-authority` for component variants and a `cn()` helper (`clsx` + `tailwind-merge`) for combining classes. Orbit is dark-theme-only: colors come from CSS custom properties (`--bg-color`, `--accent-color`, `--border-color`, and so on) consumed as Tailwind arbitrary values like `bg-[var(--bg-color)]`, rather than Tailwind's built-in color palette or a light/dark toggle.
+
+## Path alias
+
+`@/` resolves to `resources/js/` (configured in both `tsconfig.json` and the Vite config), so imports read as `@/Components/Atoms/Button` rather than long relative paths.

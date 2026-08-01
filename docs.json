@@ -35,6 +35,15 @@
           "guides/roles-and-permissions",
           "guides/onboarding"
         ]
+      },
+      {
+        "group": "Architecture",
+        "pages": [
+          "architecture/tech-stack",
+          "architecture/backend-architecture",
+          "architecture/frontend-architecture",
+          "architecture/database-schema"
+        ]
       }
     ]
   },

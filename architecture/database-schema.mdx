@@ -1,0 +1,107 @@
+---
+title: "Database schema"
+description: "Tables, relationships, and enums behind Orbit's core concepts"
+---
+
+This page maps the concepts described in [Core Concepts](/concepts/projects) to their underlying tables. It's aimed at contributors working in the codebase, not at end users.
+
+## Entity relationships
+
+```mermaid
+erDiagram
+    USERS ||--o{ PROJECTS : "creates (no FK)"
+    PROJECTS ||--o{ ISSUES : has
+    PROJECTS ||--o{ SAVED_FILTERS : has
+    PROJECTS ||--o{ ACTIVITY_LOGS : has
+    USERS ||--o{ ISSUES : "creates"
+    USERS ||--o{ ISSUES : "is assigned"
+    ISSUES ||--o{ COMMENTS : has
+    USERS ||--o{ COMMENTS : writes
+    USERS ||--o{ NOTIFICATIONS : receives
+    USERS ||--o{ ACTIVITY_LOGS : writes
+```
+
+## Tables
+
+### `users`
+
+| Column | Type | Notes |
+| --- | --- | --- |
+| `name`, `email`, `password` | string | `email` is unique |
+| `avatar` | string, nullable | |
+| `role` | string | `App\Enums\UserRole`: `admin` or `member` |
+| `has_completed_onboarding` | boolean | see [Onboarding](/guides/onboarding) |
+| `has_completed_project_onboarding` | boolean | see [Onboarding](/guides/onboarding) |
+
+### `projects`
+
+| Column | Type | Notes |
+| --- | --- | --- |
+| `name`, `description` | string / text | `description` nullable |
+| `slug` | string, unique | generated from `name` at creation |
+| `color` | string enum | one of 10 fixed colors |
+| `columns` | json | per-project table column visibility map |
+
+Relationships: `hasMany(Issue)`, `hasMany(SavedFilter)`.
+
+### `issues`
+
+| Column | Type | Notes |
+| --- | --- | --- |
+| `title`, `description` | string / text, nullable | |
+| `status` | string enum | `open`, `in_progress`, `closed` — see `App\Enums\IssueStatus` |
+| `priority` | string enum | `low`, `medium`, `high` |
+| `project_id` | FK → `projects` | cascades on delete |
+| `user_id` | FK → `users`, nullable | the creator; cascades on delete |
+| `assignee_id` | FK → `users`, nullable | sets null on delete |
+| `labels` | json, nullable | array of `App\Enums\IssueLabel` values |
+| `start_date`, `end_date` | date, nullable | |
+
+Relationships: `belongsTo(User, 'user_id')` as `creator`, `belongsTo(User, 'assignee_id')` as `assignee`, `belongsTo(Project)`, `hasMany(Comment)`.
+
+<Note>
+  A database-level trigger enforces `end_date >= start_date` whenever both are set — this constraint exists in the schema itself, not just in request validation, so it holds even for data written outside the app (seeders, Tinker, and so on).
+</Note>
+
+### `comments`
+
+| Column | Type | Notes |
+| --- | --- | --- |
+| `issue_id` | FK → `issues` | cascades on delete |
+| `user_id` | FK → `users`, nullable | cascades on delete |
+| `body` | text | |
+
+### `notifications`
+
+| Column | Type | Notes |
+| --- | --- | --- |
+| `user_id` | FK → `users` | cascades on delete; the recipient |
+| `type` | string enum | `success`, `info`, `warning`, `error` |
+| `title`, `message` | string / text | |
+| `read` | boolean, default `false` | |
+| `action_url` | string, nullable | link the notification points to |
+
+### `activity_logs`
+
+| Column | Type | Notes |
+| --- | --- | --- |
+| `project_id` | FK → `projects` | cascades on delete |
+| `user_id` | FK → `users`, nullable | cascades on delete |
+| `body` | text | a human-readable sentence describing what happened |
+
+### `saved_filters`
+
+| Column | Type | Notes |
+| --- | --- | --- |
+| `project_id` | FK → `projects` | cascades on delete |
+| `name` | string | up to 20 characters, enforced at the controller level |
+| `context` | string | |
+| `query_params` | json | the saved search/filter combination |
+
+## Enums
+
+Defined under `app/Enums/`:
+
+- **`UserRole`** — `admin`, `member`
+- **`IssueStatus`** — `open`, `in_progress`, `closed`
+- **`IssueLabel`** — `bug`, `feature`, `performance`, `design`, `ux`, `chore`

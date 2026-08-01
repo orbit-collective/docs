@@ -35,11 +35,11 @@ Orbit is a single Laravel + Inertia + React application — there's no separate 
 
 ## How Orbit is built
 
-Orbit is a monolith, not a client that talks to a separate API:
+Orbit is a monolith, not a client that talks to a separate API — see the [tech stack](/architecture/tech-stack) for the full picture:
 
-- **Backend** — Laravel 13, following a layered Controller → Service → Repository pattern. Controllers stay thin, services hold business logic and side effects (like writing to the activity log or sending a notification), and repositories own all Eloquent query building.
-- **Frontend** — React 19 with TypeScript, rendered through Inertia.js rather than a REST or GraphQL API. Pages are server-driven: a controller returns page props, and Inertia renders the matching React page.
-- **Database** — SQLite by default, swappable for MySQL or PostgreSQL through standard Laravel environment variables.
+- **[Backend](/architecture/backend-architecture)** — Laravel 13, following a layered Controller → Service → Repository pattern. Controllers stay thin, services hold business logic and side effects (like writing to the activity log or sending a notification), and repositories own all Eloquent query building.
+- **[Frontend](/architecture/frontend-architecture)** — React 19 with TypeScript, rendered through Inertia.js rather than a REST or GraphQL API. Pages are server-driven: a controller returns page props, and Inertia renders the matching React page.
+- **[Database](/architecture/database-schema)** — SQLite by default, swappable for MySQL or PostgreSQL through standard Laravel environment variables.
 
 <Tip>
   New to the codebase? Start with the [Quickstart](/quickstart) to get Orbit running, then explore the app itself — creating a project and an issue will make the rest of these docs click into place.
