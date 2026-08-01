@@ -1,0 +1,58 @@
+---
+title: "Glossary"
+description: "Orbit's terms, defined precisely"
+---
+
+A quick reference for terms used throughout these docs, since a few of them mean something more specific in Orbit than they might elsewhere.
+
+<ResponseField name="Project" type="concept">
+  The top-level container for work. Every issue, saved filter, and activity log entry belongs to exactly one project. See [Projects](/concepts/projects).
+</ResponseField>
+
+<ResponseField name="Issue" type="concept">
+  The unit of work inside a project — not "ticket" or "task". See [Issues](/concepts/issues).
+</ResponseField>
+
+<ResponseField name="Status" type="issue field">
+  Where an issue is in its lifecycle: `Open`, `In Progress`, or `Closed`. Every issue has exactly one.
+</ResponseField>
+
+<ResponseField name="Priority" type="issue field">
+  How urgent an issue is: `Low`, `Medium`, or `High`. Every issue has exactly one (default `Medium`) — don't confuse this with status.
+</ResponseField>
+
+<ResponseField name="Label" type="issue field">
+  A tag describing what kind of work an issue is: `Bug`, `Feature`, `Performance`, `Design`, `UX`, or `Chore`. An issue can have any number of labels, including none.
+</ResponseField>
+
+<ResponseField name="Creator" type="issue field">
+  The user who created an issue. Set automatically and never editable.
+</ResponseField>
+
+<ResponseField name="Assignee" type="issue field">
+  The user responsible for resolving an issue. Optional, and distinct from the creator.
+</ResponseField>
+
+<ResponseField name="List, Board, Calendar" type="views">
+  The three interchangeable ways to look at a project's issues. "Board" is Orbit's name for the drag-and-drop Kanban view — not "Kanban" on its own. See [Views](/guides/views).
+</ResponseField>
+
+<ResponseField name="Saved filter" type="concept">
+  A named, reusable combination of search and filter criteria, scoped to one project. See [Saved Filters](/concepts/saved-filters).
+</ResponseField>
+
+<ResponseField name="Notification" type="concept">
+  A per-user, in-app alert about something relevant to you (assignment, reassignment, a comment, an update). Not to be confused with the activity log. See [Notifications](/concepts/notifications).
+</ResponseField>
+
+<ResponseField name="Activity log" type="concept">
+  A per-project, backend-only audit trail of mutations. Distinct from notifications, and not currently viewable in the app's UI. See [Activity Log](/concepts/activity-log).
+</ResponseField>
+
+<ResponseField name="Admin, Member" type="roles">
+  Orbit's two roles. The first account ever registered becomes admin; everyone after that is a member. There's no "owner" or "guest" role, and today the role mostly affects onboarding, not permissions — see [Roles and permissions](/guides/roles-and-permissions).
+</ResponseField>
+
+<ResponseField name="Dashboard" type="concept">
+  The workspace-wide overview page, summarizing every project and issue you can see. See [Dashboard](/concepts/dashboard).
+</ResponseField>

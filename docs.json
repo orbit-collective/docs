@@ -59,6 +59,13 @@
           "deployment/docker",
           "deployment/production"
         ]
+      },
+      {
+        "group": "Reference",
+        "pages": [
+          "reference/glossary",
+          "reference/faq"
+        ]
       }
     ]
   },

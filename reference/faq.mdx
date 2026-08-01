@@ -1,0 +1,45 @@
+---
+title: "FAQ and troubleshooting"
+description: "Common questions and setup issues"
+---
+
+## Conceptual questions
+
+<AccordionGroup>
+  <Accordion title="Does Orbit have a public API?">
+    Not today. Orbit is a single Laravel + Inertia + React application — the frontend gets its data from server-rendered page props, not a JSON API. `laravel/sanctum` is listed as a dependency, but it isn't configured or wired to any route, so there's no way to authenticate an external client or call Orbit programmatically. See [Tech stack](/architecture/tech-stack) for the full picture.
+  </Accordion>
+  <Accordion title="What's the difference between the admin role and being a member?">
+    Less than you'd expect. The admin role is assigned automatically to the first account ever registered, but today it only affects which account sees the first-project onboarding flow — it doesn't gate any actions. Admins and members can create, edit, and delete projects and issues equally. See [Roles and permissions](/guides/roles-and-permissions).
+  </Accordion>
+  <Accordion title="Can I view a history of changes made to a project?">
+    Not through the UI yet. Orbit records an internal activity log entry for most mutations (issues, comments, project columns), but there's no page that displays it today. See [Activity Log](/concepts/activity-log).
+  </Accordion>
+  <Accordion title="Can I change my email, password, or avatar after signing up?">
+    Not today — there's no profile or settings page in the app. See [Account](/concepts/account).
+  </Accordion>
+  <Accordion title="Why didn't my first registered account become admin?">
+    The admin role only goes to the very first account in an empty `users` table. If you're testing this and it didn't happen, you likely registered against a database that already had a user in it — reset with `php artisan migrate:fresh` (or `make fresh` in Docker) and register again on a clean database.
+  </Accordion>
+</AccordionGroup>
+
+## Setup issues
+
+<AccordionGroup>
+  <Accordion title="Blank page or 500 error right after cloning the repo">
+    This almost always means one of the setup steps was skipped: copying `.env.example` to `.env`, generating an app key (`php artisan key:generate`), or running migrations. Re-run `composer setup` (native) or `make setup` (Docker) — see [Quickstart](/quickstart).
+  </Accordion>
+  <Accordion title="Frontend assets or styles look broken / missing">
+    Make sure you've actually run a frontend build (`npm run build`) or have the Vite dev server running (`npm run dev`, or `composer dev` / `make dev` which start it alongside the backend). Orbit's pages expect Vite-built assets to be present — the app won't render correctly with a `.env` set up but no frontend build.
+  </Accordion>
+  <Accordion title="Vite hot reload stopped working (Docker)">
+    See the dedicated [troubleshooting note in the Docker guide](/deployment/docker#troubleshooting-stale-vite-hmr) — this is a known issue with the file watcher desyncing, especially on non-native storage.
+  </Accordion>
+  <Accordion title="Wrong PHP or Node version">
+    Orbit needs PHP 8.4+ and Node.js 22+. If `composer setup` or `npm install` fails with dependency resolution errors, check your local versions before assuming it's a project bug.
+  </Accordion>
+</AccordionGroup>
+
+<Tip>
+  Didn't find your issue here? Search [existing issues](https://github.com/orbit-collective/orbit/issues) on GitHub, or open a new one.
+</Tip>
