@@ -1,0 +1,27 @@
+---
+title: "Roles and permissions"
+description: "How admin and member roles work in Orbit today"
+---
+
+Orbit has two roles: **admin** and **member**.
+
+## How a role is assigned
+
+The very first account created in an Orbit workspace is automatically made an **admin**. Every account registered after that is a **member**. There's no way to change a user's role after registration through the app itself today.
+
+## What the admin role currently affects
+
+The admin role's practical effect today is narrow: the first (admin) account is shown a guided first-project setup as part of [onboarding](/guides/onboarding), presented specifically because the workspace has no projects yet.
+
+<Warning>
+  Orbit does not currently enforce role-based permissions on actions — an admin and a member can create, edit, and delete projects and issues equally. The role isn't (yet) a permissions system in the way "admin" implies in most tools; treat it as an identity for "the person who set this workspace up" rather than an access-control mechanism.
+</Warning>
+
+## What is enforced: ownership
+
+The one permission check Orbit does enforce, for every user regardless of role, is **ownership** of your own content:
+
+- You can delete a [comment](/concepts/comments) only if you wrote it
+- You can mark as read, edit, or delete a [notification](/concepts/notifications) only if it's yours
+
+Everything else — creating and editing projects, creating, editing, assigning, and deleting issues — is available to any authenticated user today.

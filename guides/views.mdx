@@ -1,0 +1,32 @@
+---
+title: "List, Board, and Calendar views"
+description: "Three ways to look at the same issues"
+---
+
+Every project shows the same underlying [issues](/concepts/issues) through three interchangeable views. Switching views doesn't change your data — it changes how you look at it. Your choice of view is remembered locally in your browser, so each project opens the way you last left it.
+
+## List
+
+The default, table-style view. It's the most powerful view for working through a large backlog:
+
+- **Sortable** by ID, title, status, assignee, priority, labels, last updated, start date, or end date, in either direction
+- **Searchable** by title, description, ID, or labels
+- **Filterable** by status, priority, labels, and assignee — including a filter for unassigned issues
+- **Paginated** on the server, so large projects stay fast
+- **Configurable columns** — show or hide columns per [project](/concepts/projects#table-columns)
+
+## Board
+
+A drag-and-drop Kanban board, grouped into columns by status (`Open`, `In Progress`, `Closed`). Drag a card to a different column to change that issue's status immediately — no need to open the issue and edit its status field by hand.
+
+<Tip>
+  The Board view is the fastest way to update status for several issues in a row, since each drag is a single action.
+</Tip>
+
+## Calendar
+
+Lays issues out on a calendar using their start and end dates, so you can see what's scheduled for a given day or week at a glance. Issues without a start date don't appear on the calendar — set one from the List or Board view, or from the issue's own page, to place it.
+
+## Switching views
+
+Use the view switcher at the top of a project to move between List, Board, and Calendar. The same [filters and saved filters](/guides/filtering-and-search) apply across List; Board and Calendar always show the full set of issues currently visible in that project.

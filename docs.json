@@ -26,6 +26,15 @@
           "concepts/notifications",
           "concepts/saved-filters"
         ]
+      },
+      {
+        "group": "Guides",
+        "pages": [
+          "guides/views",
+          "guides/filtering-and-search",
+          "guides/roles-and-permissions",
+          "guides/onboarding"
+        ]
       }
     ]
   },
