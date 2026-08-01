@@ -5,18 +5,22 @@ description: "Common questions and setup issues"
 
 ## Conceptual questions
 
+<Tip>
+  Several common "can I do X?" questions come down to something not being built yet — see [Known Limitations](/reference/known-limitations) for the full list in one place.
+</Tip>
+
 <AccordionGroup>
   <Accordion title="Does Orbit have a public API?">
-    Not today. Orbit is a single Laravel + Inertia + React application — the frontend gets its data from server-rendered page props, not a JSON API. `laravel/sanctum` is listed as a dependency, but it isn't configured or wired to any route, so there's no way to authenticate an external client or call Orbit programmatically. See [Tech stack](/architecture/tech-stack) for the full picture.
+    Not today — see [Known Limitations](/reference/known-limitations#no-public-or-programmatic-api).
   </Accordion>
   <Accordion title="What's the difference between the admin role and being a member?">
-    Less than you'd expect. The admin role is assigned automatically to the first account ever registered, but today it only affects which account sees the first-project onboarding flow — it doesn't gate any actions. Admins and members can create, edit, and delete projects and issues equally. See [Roles and permissions](/guides/roles-and-permissions).
+    Less than you'd expect — see [Known Limitations](/reference/known-limitations#roles-dont-gate-any-actions).
   </Accordion>
   <Accordion title="Can I view a history of changes made to a project?">
-    Not through the UI yet. Orbit records an internal activity log entry for most mutations (issues, comments, project columns), but there's no page that displays it today. See [Activity Log](/concepts/activity-log).
+    Not through the UI yet — see [Known Limitations](/reference/known-limitations#activity-log-has-no-ui).
   </Accordion>
   <Accordion title="Can I change my email, password, or avatar after signing up?">
-    Not today — there's no profile or settings page in the app. See [Account](/concepts/account).
+    Not today — see [Known Limitations](/reference/known-limitations#no-profile-or-account-management).
   </Accordion>
   <Accordion title="Why didn't my first registered account become admin?">
     The admin role only goes to the very first account in an empty `users` table. If you're testing this and it didn't happen, you likely registered against a database that already had a user in it — reset with `php artisan migrate:fresh` (or `make fresh` in Docker) and register again on a clean database.

@@ -1,0 +1,42 @@
+---
+title: "Known limitations"
+description: "What Orbit doesn't do yet, in one place"
+---
+
+Orbit is under active development, and a few things are either partially built or not built at all. Each of these is covered where it's relevant elsewhere in these docs — this page just collects them in one place so you don't have to piece it together from individual callouts.
+
+## No public or programmatic API
+
+Orbit is a session-authenticated Inertia monolith. `laravel/sanctum` is a dependency but isn't wired to any route, so there's no way to authenticate an external client or call Orbit outside the browser. See [Tech stack](/architecture/tech-stack#why-no-api).
+
+## Roles don't gate any actions
+
+The `admin` role is assigned automatically to the first registered account, but today it only affects which account sees the first-project onboarding flow. Admins and members can create, edit, and delete projects and issues equally — there's no policy layer enforcing role-based permissions. See [Roles and permissions](/guides/roles-and-permissions).
+
+## No profile or account management
+
+There's no way to change your name, email, password, or avatar after registering, and no way to delete your account, through the app itself — despite some unused backend plumbing for avatar uploads. See [Account](/concepts/account).
+
+## Activity log has no UI
+
+Every mutating action is recorded internally as an activity log entry, but nothing in the app currently reads it back out — there's no page or panel that displays a project's history. See [Activity Log](/concepts/activity-log).
+
+## No image insertion in the description editor
+
+The issue description editor has Tiptap's image extension configured, but no toolbar button, paste handler, or drag-and-drop wiring exists to actually let you insert one. See [Writing issue descriptions](/guides/rich-text-editing#images).
+
+## Comments and saved filters are create/delete only
+
+Comments can't be edited after posting, and you can only delete your own. Saved filters can't be renamed or edited in place — deleting and re-saving is the only way to change one. See [Comments](/concepts/comments) and [Saved Filters](/concepts/saved-filters).
+
+## Keyboard shortcuts are incomplete
+
+`Ctrl+K` currently opens the same shortcuts help modal as `?` and `/`, rather than a distinct command palette. There's also no Mac-specific (`Cmd`) equivalent for any shortcut today. See [Keyboard shortcuts](/guides/keyboard-shortcuts).
+
+## Notifications are in-app only
+
+Orbit doesn't send email or push notifications — everything happens through the in-app notification list. See [Notifications](/concepts/notifications).
+
+<Tip>
+  None of this is hidden or broken — it's simply not built yet. If you're picking a first contribution, several of these are natural starting points; see [Contributing](/architecture/contributing).
+</Tip>

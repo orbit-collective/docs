@@ -8,6 +8,12 @@
     "dark": "#6A2FB8"
   },
   "favicon": "/favicon.png",
+  "seo": {
+    "indexing": "navigable",
+    "metatags": {
+      "og:site_name": "Orbit"
+    }
+  },
   "navigation": {
     "pages": [
       {
@@ -64,6 +70,7 @@
         "group": "Reference",
         "pages": [
           "reference/glossary",
+          "reference/known-limitations",
           "reference/faq"
         ]
       }
