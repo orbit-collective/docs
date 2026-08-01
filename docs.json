@@ -47,7 +47,9 @@
           "architecture/tech-stack",
           "architecture/backend-architecture",
           "architecture/frontend-architecture",
-          "architecture/database-schema"
+          "architecture/database-schema",
+          "architecture/testing",
+          "architecture/contributing"
         ]
       },
       {

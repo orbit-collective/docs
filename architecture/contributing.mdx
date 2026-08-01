@@ -1,0 +1,50 @@
+---
+title: "Contributing"
+description: "How changes get proposed, reviewed, and merged"
+---
+
+Orbit accepts contributions through pull requests on GitHub. This page summarizes the practical parts of contributing; see the full [`CONTRIBUTING.md`](https://github.com/orbit-collective/orbit/blob/master/CONTRIBUTING.md) in the repository for the complete guide.
+
+## Before you start
+
+Check existing issues before starting work, and open an issue or discussion first if you're planning something large. Keep each pull request focused on one feature or fix — it makes review faster and keeps `git blame` useful later.
+
+## Branch names and commit messages
+
+Branches are named `<type>/<short-description>`, for example `feature/calendar-view`, `fix/login-validation`, or `docs/contributing`. Commit messages follow [Conventional Commits](https://www.conventionalcommits.org/):
+
+```
+feat(calendar): add monthly calendar view
+fix(auth): prevent duplicate login requests
+docs: update installation guide
+refactor(issue): simplify permission checks
+test(api): add issue endpoint tests
+chore: update dependencies
+```
+
+## Coding standards
+
+- **PHP** — PSR-12, typed properties, strict typing, constructor property promotion. Keep controllers thin — move business logic into [services](/architecture/backend-architecture).
+- **React** — functional components, hooks, small and composable components, local state where possible.
+- **TypeScript** — avoid `any`; prefer `unknown` or a proper type/interface, with strict typing enabled.
+- **Styling** — Tailwind utility classes, no inline styles, reuse existing components before creating new ones.
+
+## Before opening a pull request
+
+Run the test suites and confirm they pass — see [Testing](/architecture/testing) for the exact commands. Every bug fix should include a regression test where possible.
+
+A good pull request:
+
+- targets the `master` branch
+- passes all CI checks
+- includes a clear description of what changed and why
+- includes screenshots for UI changes
+- updates documentation if the change affects a workflow, configuration, or public behavior
+
+<Note>
+  Documentation is treated as part of the implementation, not an afterthought — if your change affects something described in these docs, update the relevant page in the same pull request.
+</Note>
+
+## Reporting bugs and requesting features
+
+Use the GitHub issue templates for bug reports and feature requests. A good bug report includes the Orbit version, PHP version, browser and OS (if relevant), expected vs. actual behavior, and steps to reproduce. Don't open a public issue for a security vulnerability — report it privately instead.

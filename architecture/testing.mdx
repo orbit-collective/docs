@@ -1,0 +1,40 @@
+---
+title: "Testing"
+description: "Two independent test suites, both gated in CI"
+---
+
+Orbit has two separate test suites — one for the Laravel backend, one for the React frontend — and CI fails the build if either drops below its coverage floor.
+
+## Backend: Pest
+
+Backend tests live in `tests/`, built on [Pest](https://pestphp.com). Feature tests extend a base `TestCase` with `RefreshDatabase` and run against an in-memory SQLite database, covering models, repositories, services, and controllers.
+
+```bash
+composer test              # run the full suite
+composer test-coverage     # run with coverage, enforcing a 90% line-coverage floor on app/
+php artisan test --filter=IssueServiceTest   # run a single test file
+```
+
+`composer test-coverage` requires a coverage driver (PCOV or Xdebug) — CI runs with PCOV, and Docker's `app` image includes it out of the box, so `make test-coverage` works without extra setup even if you don't have a driver installed locally.
+
+## Frontend: Vitest
+
+Frontend tests are colocated with the components they cover, as `*.test.tsx` files next to the component (for example, `Button/Button.tsx` and `Button/Button.test.tsx`), using Vitest and Testing Library in a jsdom environment.
+
+```bash
+npm test                 # watch mode
+npm run test:coverage    # run once with coverage, enforcing 80% statements/functions/lines, 75% branches
+npx vitest run resources/js/Components/Atoms/Button/Button.test.tsx -t "test name"   # a single test
+```
+
+## Running both in Docker
+
+If you're using the [Docker setup](/deployment/docker), the same suites run as `make test`, `make test-coverage`, `make test-js`, and `make test-js-coverage` inside the containers.
+
+## CI pipeline
+
+Every pull request runs five checks: a TypeScript type check (`tsc --noEmit`), an ESLint pass, the Vitest suite with its coverage gate, a production build, and the Pest suite with its coverage gate. All five must pass before a PR can merge.
+
+<Tip>
+  Add tests alongside the feature or fix you're writing, rather than treating the coverage gate as something to satisfy afterward — it's a regression floor, not a substitute for reviewing your own coverage.
+</Tip>
