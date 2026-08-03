@@ -99,15 +99,6 @@
         ]
       },
       {
-        "group": "Reference",
-        "icon": "question-circle",
-        "pages": [
-          "reference/glossary",
-          "reference/known-limitations",
-          "reference/faq"
-        ]
-      },
-      {
         "group": "Guides",
         "pages": [
           "guides/views",
@@ -135,6 +126,15 @@
           "deployment/configuration",
           "deployment/docker",
           "deployment/production"
+        ]
+      },
+      {
+        "group": "Reference",
+        "icon": "question-circle",
+        "pages": [
+          "reference/glossary",
+          "reference/known-limitations",
+          "reference/faq"
         ]
       }
     ]
