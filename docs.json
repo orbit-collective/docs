@@ -173,5 +173,12 @@
   "description": "Orbit is a modern project management platform focused on simplicity, performance, and complete control over your data.",
   "search": {
     "prompt": "Search in Orbit docs"
+  },
+  "styling": {
+    "eyebrows": "section",
+    "latex": true
+  },
+  "metadata": {
+    "timestamp": true
   }
 }
