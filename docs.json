@@ -9,7 +9,7 @@
   },
   "favicon": "/favicon.png",
   "seo": {
-    "indexing": "navigable",
+    "indexing": "all",
     "metatags": {
       "og:site_name": "Orbit"
     }
@@ -106,5 +106,9 @@
     "socials": {
       "github": "https://github.com/orbit-collective"
     }
+  },
+  "description": "Orbit is a modern project management platform focused on simplicity, performance, and complete control over your data.",
+  "search": {
+    "prompt": "Search in Orbit docs"
   }
 }
