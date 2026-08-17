@@ -30,3 +30,7 @@ Because Inertia pages render after the initial HTML loads, applying theme and ac
 ## The CSS token system
 
 Both themes are defined as a complete set of CSS custom properties in `resources/css/global.css`, scoped under `[data-theme='dark']` and `[data-theme='light']`: background and hover surfaces, text (primary, muted, and gray), borders (regular and "strong"), a semi-transparent `--surface-color`, an `--overlay-color` for modal backdrops, and the accent trio above. Components consume these as Tailwind arbitrary values (`bg-[var(--bg-color)]`) rather than Tailwind's built-in palette, which is what makes a single component correct in both themes without a `dark:` variant.
+
+<Note>
+  A few colors are deliberately left as fixed hex values rather than theme tokens: text on solid accent-colored buttons, and the label, priority, and status badge colors (`Badge`'s `bug`, `feature`, `high`, `open`, and so on variants). These are meant to look the same regardless of theme or accent choice, so they weren't swept into the token system along with everything else.
+</Note>

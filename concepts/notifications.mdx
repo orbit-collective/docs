@@ -30,7 +30,7 @@ Notifications are per-user — nobody sees anyone else's notifications, and ther
 | Channel | Default | Notes |
 | --- | --- | --- |
 | In-app | On | Shown in the notification bell; this is what existed before email support was added |
-| Email | Off | Sent via a queued job; requires a running [queue worker](/deployment/docker#services) |
+| Email | Off | Sent via a queued job; requires a running [queue worker](/deployment/docker#services); rate-limited to 2 per second across the whole app |
 
 Each notification type has its own in-app and email toggle, so you might have "Issue assigned" emailed to you while "Issue commented" stays in-app only, for example. Whatever a type's channel setting resolves to, that's checked independently for every notification — an email that's disabled for a type is simply never sent, it isn't queued and skipped.
 

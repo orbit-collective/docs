@@ -19,7 +19,7 @@
 - The three issue views are "List", "Board", and "Calendar" (capitalized) — not "Kanban" alone (Board is Orbit's name for it)
 - Use "assignee" (the user responsible for an issue) and "creator" (the user who filed it) — don't conflate the two
 - Roles are "admin" and "member" — there is no "owner" or "guest" role
-- Use "activity log" for the per-project audit trail, and "notifications" for the per-user in-app alerts — these are two distinct features, don't use them interchangeably
+- Use "activity log" for the internal audit trail (project-scoped or account-scoped), and "notifications" for the per-user alerts delivered in-app and/or by email — these are two distinct features, don't use them interchangeably
 
 ## Style preferences
 
@@ -29,7 +29,7 @@
 - Bold for UI elements: Click **Settings**
 - Code formatting for file names, commands, paths, and code references
 - When describing a feature, ground it in what's actually implemented (fields, routes, constraints) rather than aspirational behavior — Orbit's frontend types include some speculative fields (e.g. `milestone`, `sprint`, `attachments_count`) that aren't backed by the database; don't document these as real features
-- Orbit is dark-theme-only — don't write instructions implying a light/dark mode toggle exists in the app itself (this docs site's own theme toggle is unrelated)
+- Orbit supports Light, Dark, and System theme modes plus a configurable accent color (Settings → Account → Preferences) — this is a real, user-facing toggle inside the app itself, distinct from this docs site's own theme toggle
 
 ## Content boundaries
 

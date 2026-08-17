@@ -1,18 +1,22 @@
 ---
 title: "Activity log"
-description: "A per-project audit trail, captured internally"
+description: "An audit trail of project and account activity, captured internally"
 ---
 
-Every mutating action within a [project](/concepts/projects) — creating, updating, or deleting an issue; adding or removing a comment; changing a project's visible columns — is written to that project's activity log as a short, human-readable sentence.
+Every mutating action — most of them scoped to a [project](/concepts/projects), a growing number scoped to your account instead — is written to a shared activity log as a short, human-readable sentence.
 
 <Warning>
-  The activity log is captured but **not currently surfaced anywhere in the app's UI**. There's no page, sidebar, or panel that displays it today — it's written internally by the backend and has no corresponding read path in any controller. If you're looking for a visible history of what changed on a project, this isn't it yet; treat it as an internal audit trail rather than a user-facing feature.
+  The activity log is captured but **not currently surfaced anywhere in the app's UI**. There's no page, sidebar, or panel that displays it today — it's written internally by the backend and has no corresponding read path in any controller. If you're looking for a visible history of what changed, this isn't it yet; treat it as an internal audit trail rather than a user-facing feature.
 </Warning>
 
 ## What gets logged
 
-Whenever a [service](/architecture/backend-architecture) completes a mutation, it calls into a shared logging service to record what happened, attributing the entry to the project it occurred in and the user who performed it. This happens for issue creation, updates, and deletion; comment creation and deletion; project creation; and project column changes.
+Whenever a [service](/architecture/backend-architecture) completes a mutation, it calls into a shared logging service to record what happened, attributing the entry to the user who performed it and, when there is one, the project it occurred in.
+
+**Project-scoped entries** — issue creation, updates, and deletion; comment creation and deletion; project creation; and project column changes.
+
+**Account-scoped entries** — these have no project at all (`project_id` is `null` in the `activity_logs` table): changing your display name, uploading or resetting your avatar, changing your password, revoking a session (individually or all others), updating your session lifetime, deleting your account, and changing your [notification settings](/concepts/notifications). All of these live under [Settings](/concepts/settings) rather than inside a project.
 
 ## Why this exists
 
-The data model is already in place — a project has many activity log entries, each with a body and a user — which makes this a natural extension point if a visible project history or audit page is added in the future. For now, it's worth knowing this data exists (for example, if you're debugging or querying the database directly) even though there's no in-app way to view it.
+The data model supports both cases — an activity log entry optionally belongs to a project, and always has a body and (usually) a user — which makes this a natural extension point if a visible history or audit page is added in the future, whether that's a project's activity feed or an account-level security log. For now, it's worth knowing this data exists (for example, if you're debugging or querying the database directly) even though there's no in-app way to view it.

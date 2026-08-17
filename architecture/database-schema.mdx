@@ -111,9 +111,13 @@ Laravel's standard database session-driver table, surfaced in the UI as the [act
 
 | Column | Type | Notes |
 | --- | --- | --- |
-| `project_id` | FK → `projects` | cascades on delete |
+| `project_id` | FK → `projects`, nullable | cascades on delete when set; `null` for account-level entries — see below |
 | `user_id` | FK → `users`, nullable | cascades on delete |
 | `body` | text | a human-readable sentence describing what happened |
+
+<Note>
+  `project_id` became nullable to support account-level activity — renaming your profile, changing your password, revoking a session, updating session lifetime, deleting your account, and changing [notification settings](/concepts/notifications) all write an entry with `project_id = null`. See [Activity log](/concepts/activity-log) for the full picture.
+</Note>
 
 ### `saved_filters`
 

@@ -20,8 +20,8 @@ Orbit's pages: `Dashboard`, `Projects/Index`, `Projects/Show` (the main project 
 Components are organized by composability, each in its own folder with a colocated test file (`Button/Button.tsx`, `Button/Button.test.tsx`):
 
 - **Atoms** — the smallest building blocks: `Button`, `Input`, `Badge`, `Avatar`, `Icon`, and so on
-- **Molecules** — small combinations of atoms: `CommentForm`, `FilterDropdown`, `ProjectCard`, `NotificationItem`
-- **Organisms** — larger, feature-level components: `IssueBoard`, `IssueTable`, `Sidebar`, `NewIssueModal`, `DashboardVisuals`
+- **Molecules** — small combinations of atoms: `CommentForm`, `FilterDropdown`, `ProjectCard`, `NotificationItem`, `Breadcrumb`
+- **Organisms** — larger, feature-level components: `IssueBoard`, `IssueTable`, `Sidebar`, `NewIssueModal`, `DashboardVisuals`, `SettingsSidebar`
 
 The composition rule is one-directional: organisms use molecules, molecules use atoms — never the reverse.
 
