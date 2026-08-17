@@ -3,7 +3,7 @@ title: "Configuration"
 description: "Environment variables that matter when setting up Orbit"
 ---
 
-Orbit is configured entirely through a standard Laravel `.env` file. This page covers the variables you're likely to actually touch — the rest of `.env.example` is framework boilerplate you can leave at its default.
+Orbit is configured through the same set of Laravel environment variables regardless of how you run it. For the native setup and Docker without Doppler, that means a standard `.env` file. If you're on the Docker path and this directory is linked to a [Doppler](https://www.doppler.com/) project, Doppler injects these same variables directly instead of a `.env` file — see [Docker](/deployment/docker#where-configuration-comes-from-doppler-or-env) for that distinction. This page covers the variables you're likely to actually touch — the rest of `.env.example` is framework boilerplate you can leave at its default.
 
 ## Application
 

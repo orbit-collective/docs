@@ -16,6 +16,10 @@ Before you begin, you must have one of the following:
 
 <Tabs>
   <Tab title="Docker">
+    <Note>
+      The Orbit team uses [Doppler](https://www.doppler.com/) to manage the Docker stack's environment variables, but it's entirely optional — you don't need a Doppler account or its CLI to run Orbit locally. If this directory was never linked with `doppler setup`, `make setup` falls back to bootstrapping a plain `.env` file for you automatically. See [Docker](/deployment/docker#where-configuration-comes-from-doppler-or-env) for how the two modes differ.
+    </Note>
+
     <Steps>
       <Step title="Clone the repository">
         ```bash

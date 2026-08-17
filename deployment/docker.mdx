@@ -13,7 +13,31 @@ Orbit ships with a Docker Compose setup, driven through a `Makefile` so you don'
 - **`nsfwjs`** — the image-moderation service used to screen [avatar uploads](/concepts/account#profile), on port `3333`. `app` depends on it; `queue` depends on `app`.
 - **`uptime-kuma`** — an optional monitoring dashboard on port `3001`, gated behind the Compose `monitoring` profile so it doesn't start with the rest of the stack by default (see below).
 
-Configuration for the containers comes from the same `.env` the native setup uses — there's no separate `.env.docker` file anymore — see [Configuration](/deployment/configuration) for what each variable does.
+There's no separate `.env.docker` file — `docker-compose.yml` declares each service's environment as plain `KEY: ${KEY}` interpolation from whatever environment the `docker compose` process itself runs in. See [Configuration](/deployment/configuration) for what each variable does, and below for where those values actually come from.
+
+## Where configuration comes from: Doppler or `.env`
+
+Every `make` target that needs environment variables runs an `ensure-env` step first, and the `Makefile` picks one of two modes automatically by checking whether this directory has ever been linked to a [Doppler](https://www.doppler.com/) project (`doppler setup`):
+
+- **Linked to Doppler** (the core team) — the `Makefile` wraps every command in `doppler run --`, injecting your Doppler config's secrets straight into the `docker compose` process. Doppler is the sole source of truth; no `.env` file is read or written, and `ensure-env` is a no-op.
+- **Not linked to Doppler** (contributors, forks, anyone without Doppler access) — `ensure-env` falls back to a plain `.env` file at the repo root: it copies `.env.example` to `.env` on first run and generates a fresh `APP_KEY` if one isn't set yet, both idempotently. `docker compose` then reads that `.env` automatically for `${KEY}` interpolation.
+
+You never choose between the two modes explicitly — detection is automatic, and either way the containers end up with the exact same set of variables, just sourced differently. Doppler isn't required to run Orbit locally; it's purely an internal convenience for the team that already has access to it.
+
+<Note>
+  If you're on the Doppler-linked path, generate `APP_KEY` yourself before your first `make setup`/`make up` — nothing inside the container writes back to Doppler:
+
+  ```bash
+  php artisan key:generate --show      # prints a fresh base64:... key
+  doppler secrets set APP_KEY="<paste the key here>"
+  ```
+
+  Seeing `MissingAppKeyException` or another config-looking error? In Doppler mode, diff `doppler secrets --only-names` against the `environment:` blocks in `docker-compose.yml`. In fallback mode, confirm `.env` exists with a non-empty `APP_KEY=base64:...` line — delete it and re-run any `make` target to regenerate it from scratch.
+</Note>
+
+<Note>
+  `php artisan serve` normally treats the mere *presence* of a `.env` file as a signal to filter which environment variables reach the request-handling process. That's harmless in the fallback mode (the filtered set is the same `.env` it read from), but it would break the Doppler-linked mode, where the real config lives only in the process environment injected by `doppler run --`, not in a file. That's why the `app` container's `CMD` runs `serve` with `--no-reload` — it disables that filtering so the full environment always passes through, regardless of which mode is active.
+</Note>
 
 ## Common commands
 
