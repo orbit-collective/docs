@@ -23,13 +23,29 @@ Orbit defaults to SQLite (`DB_CONNECTION=sqlite`, backed by `database/database.s
 
 All three default to the `database` driver (`SESSION_DRIVER`, `CACHE_STORE`, `QUEUE_CONNECTION`), which needs no extra infrastructure — just a migrated database. Redis (`REDIS_HOST`, `REDIS_PORT`, `REDIS_PASSWORD`) and Memcached (`MEMCACHED_HOST`) variables are present in `.env.example` if you'd rather run one of those instead, but neither is required.
 
+The queue is no longer just framework boilerplate: a worker actually needs to be running (`php artisan queue:work`, or the `queue` Docker service — see [Docker](/deployment/docker#services)) for [email notifications](/concepts/notifications#channels) to be delivered, whichever queue driver you pick.
+
 ## File storage
 
 `FILESYSTEM_DISK=local` is used for user avatar uploads. If you want avatars stored on S3 instead, set `FILESYSTEM_DISK=s3` and fill in `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `AWS_DEFAULT_REGION`, and `AWS_BUCKET`.
 
 ## Mail and broadcasting
 
-`MAIL_MAILER=log` and `BROADCAST_CONNECTION=log` are Laravel framework defaults present in `.env.example`. Orbit's own [notifications](/concepts/notifications) are in-app only — nothing in the app currently sends mail or broadcasts over a websocket connection, so these variables don't need to be configured for any of Orbit's features to work.
+`BROADCAST_CONNECTION=log` is a Laravel framework default present in `.env.example` — nothing in the app currently broadcasts over a websocket connection, so it doesn't need to be configured.
+
+`MAIL_MAILER` matters now: [notification emails](/concepts/notifications#channels) are sent through Laravel's standard mail configuration (`MAIL_HOST`, `MAIL_PORT`, `MAIL_USERNAME`, `MAIL_PASSWORD`, `MAIL_FROM_ADDRESS`, `MAIL_FROM_NAME`). `.env.example` defaults `MAIL_MAILER=log`, which writes emails to the log instead of actually sending them — fine for local development, but point it at a real driver (`smtp`, `ses`, and so on) before relying on email delivery anywhere else. Delivery also requires a running [queue worker](/deployment/docker#services) regardless of mailer — emails are always queued, never sent synchronously.
+
+## Avatar moderation (nsfwjs)
+
+Uploaded [avatars](/concepts/account#profile) are screened by a separate nsfwjs HTTP service before they're accepted.
+
+| Variable | Notes |
+| --- | --- |
+| `NSFW_DETECTION_ENABLED` | Defaults to `true`. Set to `false` to skip moderation entirely and accept every valid image upload |
+| `NSFW_SERVICE_URL` | Where the nsfwjs service is reachable. Defaults to `http://localhost:3333` for a native/host setup; Docker Compose overrides this to `http://nsfwjs:3333` automatically, since `localhost` inside the `app` container isn't the host machine |
+| `NSFW_THRESHOLD` | Probability threshold (`0.0`–`1.0`, default `0.70`) above which an image classified as explicit is rejected |
+
+If the nsfwjs service is unreachable when someone uploads an avatar, the upload is rejected rather than allowed through unchecked.
 
 ## Frontend
 

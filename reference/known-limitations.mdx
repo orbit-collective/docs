@@ -13,9 +13,17 @@ Orbit is a session-authenticated Inertia monolith. `laravel/sanctum` is a depend
 
 The `admin` role is assigned automatically to the first registered account, but today it only affects which account sees the first-project onboarding flow. Admins and members can create, edit, and delete projects and issues equally — there's no policy layer enforcing role-based permissions. See [Roles and permissions](/guides/roles-and-permissions).
 
-## No profile or account management
+## No email address changes
 
-There's no way to change your name, email, password, or avatar after registering, and no way to delete your account, through the app itself — despite some unused backend plumbing for avatar uploads. See [Account](/concepts/account).
+Name, avatar, and password can all be changed after registering, and the account can be deleted — but there's still no way to change the email address you registered with, through the app itself. See [Account](/concepts/account#profile).
+
+## Most Settings sections are placeholders
+
+Only four of the Settings page's thirteen tabs actually do anything: Preferences, Profile, Notifications, and Security & access. Everything else — Integrations, Export, and the entire Workspace section (Labels, Statuses, Priorities, Templates, Documents, Members, Roles & management) — is visible in the navigation with a "Soon" badge but isn't reachable. See [Settings](/concepts/settings#tabs).
+
+## Mentions and project invites don't notify anyone
+
+`IssueMentioned` and `ProjectInvited` exist as notification types, each with their own default channel settings, but nothing triggers either one — there's no @mention parsing in comments or descriptions, and no flow to invite someone to a project. See [Notifications](/concepts/notifications#notification-types).
 
 ## Activity log has no UI
 
@@ -33,9 +41,9 @@ Comments can't be edited after posting, and you can only delete your own. Saved 
 
 `Ctrl+K` currently opens the same shortcuts help modal as `?` and `/`, rather than a distinct command palette. There's also no Mac-specific (`Cmd`) equivalent for any shortcut today. See [Keyboard shortcuts](/guides/keyboard-shortcuts).
 
-## Notifications are in-app only
+## No push notifications
 
-Orbit doesn't send email or push notifications — everything happens through the in-app notification list. See [Notifications](/concepts/notifications).
+Orbit supports in-app and email notifications, but nothing beyond that — no browser push, no mobile push. See [Notifications](/concepts/notifications).
 
 <Tip>
   None of this is hidden or broken — it's simply not built yet. If you're picking a first contribution, several of these are natural starting points; see [Contributing](/architecture/contributing).

@@ -1,6 +1,6 @@
 ---
 title: "Account"
-description: "Registering, signing in, and what account management looks like today"
+description: "Registering, signing in, and managing your profile and security"
 ---
 
 ## Registering
@@ -19,10 +19,38 @@ The very first account ever registered becomes an [admin](/guides/roles-and-perm
 
 Sign in with your email and password. Signing out is a single click — Orbit doesn't ask you to confirm before ending your session.
 
-## Changing your profile or avatar
+By default a session stays valid for as long as you're active, but you can shorten that from [Security & access](#security-and-access) below.
 
-<Warning>
-  There is currently no way to change your name, email, password, or avatar after registering, and no way to delete your account, through the app itself. The backend has an unused method for updating a profile and uploading an avatar, but it isn't connected to any route or page yet — so today, whatever you enter at registration is permanent from the UI's perspective.
-</Warning>
+## Account settings
 
-If you need to correct account details today, that requires updating the record directly in the database rather than through Orbit's interface.
+Everything covered on this page lives under **Settings → [account section](/concepts/settings)** — open it from the sidebar, or jump straight to a tab with `/settings?tab=<tab-id>`.
+
+### Profile
+
+From the **Profile** tab you can:
+
+- Change your display name — validated inline (3–30 characters), with a "saved" / "unsaved changes" indicator so you always know whether an edit has actually been persisted
+- Upload a new profile photo, or reset back to the default avatar
+
+Avatar uploads are validated client-side (JPEG, PNG, or GIF, 5 MB max) and shown in a live preview before you save. On the server, every uploaded avatar is screened by an NSFW detection service before it's accepted — an upload classified as unsafe is rejected outright, with an error explaining why. If the moderation service itself is unreachable, the upload is rejected rather than silently allowed through.
+
+<Note>
+  There's still no way to change your email address through the app. Name, avatar, and password are all self-service now; email is not.
+</Note>
+
+### Security and access
+
+From the **Security & access** tab you can:
+
+- Change your password, with live strength-meter feedback as you type
+- View every session currently signed in to your account — IP address, browser user-agent string, and when it was last active — and revoke any one of them individually, or revoke every session except the one you're currently using
+- Choose how long a session can stay idle before it's forced to sign in again: **1 hour**, **8 hours**, **24 hours**, or **7 days**. This is enforced server-side — once your last recorded activity is older than your chosen window, the next request signs you out automatically, regardless of what the client does
+- Permanently delete your account — the confirmation modal requires typing `DELETE` before the button activates, since this can't be undone
+
+### Preferences and notifications
+
+Your default issue view, interface theme, and accent color live under **Preferences** — see [Settings](/concepts/settings) and [Appearance](/guides/appearance). Per-type, per-channel notification preferences live under **Notifications** — see [Notifications](/concepts/notifications).
+
+<Note>
+  **Integrations** and **Export** tabs exist in the Settings navigation but aren't built out yet — they're shown with a "Soon" badge and aren't reachable. See [Settings](/concepts/settings#tabs) for the full list of what is and isn't available today.
+</Note>

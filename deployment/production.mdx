@@ -26,8 +26,11 @@ Orbit doesn't require any infrastructure beyond what a standard Laravel app need
   <Step title="Point at a production-grade database">
     SQLite is fine for local development, but for production, switch to MySQL or PostgreSQL — see [Configuration](/deployment/configuration#database) for the variables to set.
   </Step>
-  <Step title="Configure mail if you plan to add it">
-    Orbit's notifications are in-app only today (see [Notifications](/concepts/notifications)), so `MAIL_MAILER` doesn't need to be configured for any current feature to work. Leave it as-is unless you're extending Orbit yourself.
+  <Step title="Configure mail for email notifications">
+    Orbit sends [email notifications](/concepts/notifications#channels) through Laravel's standard mail configuration. `.env.example` defaults `MAIL_MAILER=log`, which just writes emails to the log — point it at a real driver (`smtp`, `ses`, and so on) and fill in `MAIL_HOST`/`MAIL_PORT`/`MAIL_USERNAME`/`MAIL_PASSWORD`/`MAIL_FROM_ADDRESS`/`MAIL_FROM_NAME` before relying on email delivery in production. See [Configuration](/deployment/configuration#mail-and-broadcasting).
+  </Step>
+  <Step title="Configure avatar moderation (nsfwjs)">
+    Avatar uploads are screened by a separate nsfwjs HTTP service before being accepted (see [Configuration](/deployment/configuration#avatar-moderation-nsfwjs)). Run the `nsfwjs` container (or point `NSFW_SERVICE_URL` at your own instance) before enabling avatar uploads in production, or set `NSFW_DETECTION_ENABLED=false` to skip moderation entirely.
   </Step>
 </Steps>
 
@@ -64,12 +67,12 @@ Orbit doesn't require any infrastructure beyond what a standard Laravel app need
 
 ## Running the queue
 
-Session, cache, and queue all default to the `database` driver. If you rely on queued jobs, run a queue worker under a process supervisor (such as `supervisord` or systemd) rather than the `queue:listen` command used in local development, so it restarts automatically:
+Session, cache, and queue all default to the `database` driver. A queue worker is **required** in production, not optional — [email notifications](/concepts/notifications#channels) are always queued, never sent synchronously, so without a worker running they'll pile up unsent in the `jobs` table. Run it under a process supervisor (such as `supervisord` or systemd) rather than the `queue:listen` command used in local development, so it restarts automatically:
 
 ```bash
-php artisan queue:work
+php artisan queue:work --tries=3
 ```
 
 ## What Orbit doesn't need
 
-Since Orbit has no public API (see [Tech stack](/architecture/tech-stack#why-no-api)) and no broadcasting or mail-driven features in active use, you don't need to provision a websocket server, a transactional email provider, or API rate limiting for Orbit's current feature set to work in production.
+Since Orbit has no public API (see [Tech stack](/architecture/tech-stack#why-no-api)) and no broadcasting features in active use, you don't need to provision a websocket server or API rate limiting for Orbit's current feature set to work in production. You do need a transactional email provider (for notification emails) and a running queue worker — see above.

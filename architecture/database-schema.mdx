@@ -19,6 +19,8 @@ erDiagram
     USERS ||--o{ COMMENTS : writes
     USERS ||--o{ NOTIFICATIONS : receives
     USERS ||--o{ ACTIVITY_LOGS : writes
+    USERS ||--o{ SESSIONS : has
+    USERS ||--o{ NOTIFICATION_SETTINGS : configures
 ```
 
 ## Tables
@@ -32,6 +34,7 @@ erDiagram
 | `role` | string | `App\Enums\UserRole`: `admin` or `member` |
 | `has_completed_onboarding` | boolean | see [Onboarding](/guides/onboarding) |
 | `has_completed_project_onboarding` | boolean | see [Onboarding](/guides/onboarding) |
+| `session_lifetime` | unsigned integer, default `480` | minutes of inactivity before forced re-login; see [Account](/concepts/account#security-and-access) |
 
 ### `projects`
 
@@ -76,10 +79,33 @@ Relationships: `belongsTo(User, 'user_id')` as `creator`, `belongsTo(User, 'assi
 | Column | Type | Notes |
 | --- | --- | --- |
 | `user_id` | FK → `users` | cascades on delete; the recipient |
-| `type` | string enum | `success`, `info`, `warning`, `error` |
+| `notification_type` | string enum, nullable | `App\Enums\Notifications\NotificationType` — which event this notification is about, distinct from the display `type` below |
+| `type` | string enum | `success`, `info`, `warning`, `error` — how it's styled in the notification list |
 | `title`, `message` | string / text | |
 | `read` | boolean, default `false` | |
 | `action_url` | string, nullable | link the notification points to |
+
+### `notification_settings`
+
+| Column | Type | Notes |
+| --- | --- | --- |
+| `user_id` | FK → `users` | cascades on delete |
+| `type` | string enum | `App\Enums\Notifications\NotificationType` |
+| `channel` | string enum | `App\Enums\Notifications\NotificationChannel`: `in_app` or `email` |
+| `enabled` | boolean, default `true` | |
+
+Unique on (`user_id`, `type`, `channel`). A missing row for a given type/channel combination means "use that channel's default" (in-app defaults on, email defaults off) rather than being explicitly set — see [Notifications](/concepts/notifications#channels).
+
+### `sessions`
+
+| Column | Type | Notes |
+| --- | --- | --- |
+| `id` | string, primary key | Laravel's session ID |
+| `user_id` | FK → `users`, nullable, indexed | |
+| `ip_address`, `user_agent` | string / text, nullable | |
+| `last_activity` | integer, indexed | unix timestamp, used to sort and to detect the current session |
+
+Laravel's standard database session-driver table, surfaced in the UI as the [active sessions list](/concepts/account#security-and-access).
 
 ### `activity_logs`
 
@@ -105,3 +131,9 @@ Defined under `app/Enums/`:
 - **`UserRole`** — `admin`, `member`
 - **`IssueStatus`** — `open`, `in_progress`, `closed`
 - **`IssueLabel`** — `bug`, `feature`, `performance`, `design`, `ux`, `chore`
+- **`Notifications\NotificationType`** — `issue_assigned`, `issue_mentioned`, `issue_commented`, `issue_status_changed`, `issue_priority_changed`, `issue_labels_changed`, `issue_dates_changed`, `issue_updated`, `project_invited` — see [Notifications](/concepts/notifications#notification-types) for which of these are actually triggered today
+- **`Notifications\NotificationChannel`** — `in_app` (default enabled), `email` (default disabled)
+
+<Note>
+  Laravel's own queue tables (`jobs`, `failed_jobs`, `job_batches`) also exist, backing the `database` queue driver used to deliver [email notifications](/concepts/notifications#channels). They're framework-standard and not covered further here.
+</Note>

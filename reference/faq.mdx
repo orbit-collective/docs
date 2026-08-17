@@ -20,7 +20,7 @@ description: "Common questions and setup issues"
     Not through the UI yet — see [Known Limitations](/reference/known-limitations#activity-log-has-no-ui).
   </Accordion>
   <Accordion title="Can I change my email, password, or avatar after signing up?">
-    Not today — see [Known Limitations](/reference/known-limitations#no-profile-or-account-management).
+    Name, password, and avatar — yes, from Settings → Account. Email address — not today. See [Known Limitations](/reference/known-limitations#no-email-address-changes).
   </Accordion>
   <Accordion title="Why didn't my first registered account become admin?">
     The admin role only goes to the very first account in an empty `users` table. If you're testing this and it didn't happen, you likely registered against a database that already had a user in it — reset with `php artisan migrate:fresh` (or `make fresh` in Docker) and register again on a clean database.
@@ -40,7 +40,10 @@ description: "Common questions and setup issues"
     See the dedicated [troubleshooting note in the Docker guide](/deployment/docker#troubleshooting-stale-vite-hmr) — this is a known issue with the file watcher desyncing, especially on non-native storage.
   </Accordion>
   <Accordion title="Wrong PHP or Node version">
-    Orbit needs PHP 8.4+ and Node.js 22+. If `composer setup` or `npm install` fails with dependency resolution errors, check your local versions before assuming it's a project bug.
+    Orbit needs PHP 8.5+ and Node.js 22+. If `composer setup` or `npm install` fails with dependency resolution errors, check your local versions before assuming it's a project bug.
+  </Accordion>
+  <Accordion title="Email notifications aren't arriving">
+    Two separate things have to be true: `MAIL_MAILER` must point at a real driver (it defaults to `log`, which just writes to a log file instead of sending), and a queue worker must be running, since notification emails are always queued. See [Configuration](/deployment/configuration#mail-and-broadcasting) and the [Docker services list](/deployment/docker#services) for the `queue` container.
   </Accordion>
 </AccordionGroup>
 

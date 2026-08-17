@@ -1,22 +1,48 @@
 ---
 title: "Notifications"
-description: "In-app alerts for the issues you care about"
+description: "In-app and email alerts for the issues you care about"
 ---
 
-Notifications tell you when something relevant to you happens in Orbit. They're purely in-app — Orbit doesn't send email or push notifications today.
+Notifications tell you when something relevant to you happens in Orbit. Each notification has a **type** — what happened — and can be delivered on one or more **channels**: in-app (the notification bell) and email.
 
-## What triggers a notification
+## Notification types
 
-| Event | Who gets notified |
+| Type | Fires when |
 | --- | --- |
-| You're assigned an issue | The new assignee |
-| An issue you're assigned to is reassigned | The previous assignee and the new assignee |
-| An assigned issue you're on is updated (status, priority, and so on) | The current assignee |
-| Someone comments on an issue you're assigned to | The assignee (unless they wrote the comment themselves) |
+| Issue assigned | You're assigned an issue — including when it's reassigned away from you and to someone else |
+| Issue commented | Someone comments on an issue you're assigned to (unless they wrote the comment themselves) |
+| Issue status changed | An assigned issue's status changes |
+| Issue priority changed | An assigned issue's priority changes |
+| Issue labels changed | An assigned issue's labels change |
+| Issue dates changed | An assigned issue's start or end date changes |
+| Issue updated | An assigned issue changes in a way that doesn't match a more specific type above |
+| Issue mentioned | *(defined, not yet wired up — see below)* |
+| Project invited | *(defined, not yet wired up — see below)* |
+
+<Note>
+  `IssueMentioned` and `ProjectInvited` exist as notification types with their own default settings, but nothing in the app currently triggers them — there's no @mention parser in comments or descriptions, and no project invite flow to invite from. Don't take their presence in Settings as confirmation those features exist yet.
+</Note>
 
 Notifications are per-user — nobody sees anyone else's notifications, and there's no team-wide or broadcast notification.
 
-## Managing notifications
+## Channels
+
+| Channel | Default | Notes |
+| --- | --- | --- |
+| In-app | On | Shown in the notification bell; this is what existed before email support was added |
+| Email | Off | Sent via a queued job; requires a running [queue worker](/deployment/docker#services) |
+
+Each notification type has its own in-app and email toggle, so you might have "Issue assigned" emailed to you while "Issue commented" stays in-app only, for example. Whatever a type's channel setting resolves to, that's checked independently for every notification — an email that's disabled for a type is simply never sent, it isn't queued and skipped.
+
+<Warning>
+  Email delivery depends on a queue worker actually running and processing jobs (`php artisan queue:work`, or the `queue` service in Docker — see [Docker](/deployment/docker)). If the worker isn't running, email notifications silently pile up in the `jobs` table instead of being delivered — in-app notifications are unaffected since those are written synchronously.
+</Warning>
+
+## Managing notification preferences
+
+From **Settings → Account → Notifications**, every notification type is listed with an in-app and email toggle. Changes save immediately and are recorded in the [activity log](/concepts/activity-log). See [Settings](/concepts/settings) for how to get there.
+
+## The in-app notification list
 
 Every notification has a type (success, info, warning, or error), a title, a message, and optionally a link to the page it relates to. From the notification list you can:
 

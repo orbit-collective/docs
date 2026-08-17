@@ -7,27 +7,41 @@ Orbit ships with a Docker Compose setup, driven through a `Makefile` so you don'
 
 ## Services
 
-Two services make up the stack:
-
 - **`app`** — the Laravel application, serving on port `8000`. The image includes PCOV, so PHP test coverage works without extra setup.
 - **`vite`** — the frontend dev server, serving assets and HMR on port `5173`.
+- **`queue`** — runs `php artisan queue:work --tries=3` against the same image as `app`. Required for [email notifications](/concepts/notifications#channels) to actually be delivered — nothing else in the stack processes queued jobs.
+- **`nsfwjs`** — the image-moderation service used to screen [avatar uploads](/concepts/account#profile), on port `3333`. `app` depends on it; `queue` depends on `app`.
+- **`uptime-kuma`** — an optional monitoring dashboard on port `3001`, gated behind the Compose `monitoring` profile so it doesn't start with the rest of the stack by default (see below).
 
-Configuration for the containers comes from `.env.docker` rather than `.env` — see [Configuration](/deployment/configuration) for what each variable does.
+Configuration for the containers comes from the same `.env` the native setup uses — there's no separate `.env.docker` file anymore — see [Configuration](/deployment/configuration) for what each variable does.
 
 ## Common commands
 
 | Command | Does |
 | --- | --- |
-| `make setup` | Builds both images without cache and starts them, bootstrapping `.env`, the SQLite file, the app key, and migrations |
-| `make up` | Starts the stack detached |
-| `make dev` | Starts the stack in the foreground, streaming logs |
+| `make setup` | Builds every image without cache and starts the default stack, bootstrapping `.env`, the SQLite file, the app key, and migrations |
+| `make up` | Starts the stack in the foreground, streaming logs — identical to `make dev` |
+| `make dev` | Same as `make up` |
+| `make up-d` | Starts the stack detached |
 | `make down` | Stops the stack, keeping volumes |
 | `make clean` | Stops the stack and drops volumes — use this if the database or dependencies need a truly clean slate |
 | `make shell` | Opens a shell in the `app` container |
 | `make tinker` | Opens a Laravel Tinker session inside the `app` container |
 | `make migrate` | Runs `php artisan migrate` inside the container |
 | `make fresh` | Runs `migrate:fresh --seed` — drops all tables, re-migrates, and reseeds demo data |
+| `make composer-install` | Rebuilds and restarts `app` after adding, updating, or removing a Composer dependency |
+| `make npm-install` | Rebuilds and restarts `vite` after adding, updating, or removing an npm dependency |
 | `make logs` | Tails container logs |
+
+## Monitoring stack
+
+`uptime-kuma` doesn't start with `make up` or `make dev` — it lives behind Compose's `monitoring` profile so it's opt-in:
+
+| Command | Does |
+| --- | --- |
+| `make up-monitoring` | Starts `uptime-kuma` on `localhost:3001` |
+| `make down-monitoring` | Stops it |
+| `make logs-monitoring` | Tails its logs |
 
 ## Running tests in Docker
 
@@ -48,7 +62,7 @@ If hot reload stops working and the browser console shows WebSocket errors, the 
   <Step title="Restart the containers">
     ```bash
     make down
-    make up
+    make up-d
     ```
   </Step>
   <Step title="If that doesn't fix it, rebuild from scratch">

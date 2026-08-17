@@ -1,0 +1,32 @@
+---
+title: "Appearance"
+description: "Theme and accent color, and how Orbit avoids a flash of the wrong colors"
+---
+
+Orbit is no longer dark-theme-only. Both interface theme and accent color are configurable from **Settings → Account → Preferences** (see [Settings](/concepts/settings)), persist across sessions, and apply instantly, app-wide.
+
+## Theme
+
+Three modes are available:
+
+| Mode | Behavior |
+| --- | --- |
+| Dark | Orbit's original dark interface |
+| Light | A full light palette — every screen renders correctly, not just an inverted dark theme |
+| System | Follows your OS-level light/dark preference, live — switching your OS theme while Orbit is open updates it immediately, no reload needed |
+
+Your choice is stored in `localStorage` under the `theme` key. "System" is resolved via `window.matchMedia('(prefers-color-scheme: light)')`; the resolved value (`light` or `dark`, never `system` itself) is written to a `data-theme` attribute on `<html>`, which is what Orbit's CSS actually keys off.
+
+## Accent color
+
+Eleven accent options are available: **Default** (Orbit's original purple) plus ten colors — red, orange, yellow, green, lime, blue, sky, violet, purple, and pink. Your choice is stored in `localStorage` under the `accentColor` key.
+
+Choosing a non-default accent overrides three CSS custom properties on `<html>` (`--accent-color`, `--accent-light-color`, `--accent-color-opacity`), computed from the color's base and light hex values with a lower opacity in Light mode (`0.12`) than Dark mode (`0.2`) so accent-tinted surfaces don't overwhelm the lighter background. Choosing **Default** removes the override entirely, so the theme's own built-in accent value applies instead.
+
+## Avoiding a flash of the wrong theme
+
+Because Inertia pages render after the initial HTML loads, applying theme and accent purely from React would show a flash of the wrong colors on every full page load. Orbit avoids this with a small blocking `<script>` in `resources/views/app.blade.php`, inlined in `<head>` before any stylesheet or React code runs: it reads `theme` and `accentColor` from `localStorage`, resolves `system` the same way the React `ThemeContext` does, and sets `data-theme` and the accent CSS variables directly — so the very first paint already has the right colors.
+
+## The CSS token system
+
+Both themes are defined as a complete set of CSS custom properties in `resources/css/global.css`, scoped under `[data-theme='dark']` and `[data-theme='light']`: background and hover surfaces, text (primary, muted, and gray), borders (regular and "strong"), a semi-transparent `--surface-color`, an `--overlay-color` for modal backdrops, and the accent trio above. Components consume these as Tailwind arbitrary values (`bg-[var(--bg-color)]`) rather than Tailwind's built-in palette, which is what makes a single component correct in both themes without a `dark:` variant.

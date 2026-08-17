@@ -37,11 +37,15 @@ Keeping query logic out of services keeps business logic readable — `IssueServ
 
 Two cross-cutting services are called from other domain services rather than directly from controllers:
 
-- **`ActivityLogService`** — appends a human-readable sentence to a project's activity log whenever something changes (an issue is created, updated, or deleted; a comment is added; project columns are updated, and so on)
-- **`NotificationService`** — creates a row in the `notifications` table for a specific user, used for [assignment and comment notifications](/concepts/notifications)
+- **`ActivityLogService`** — appends a human-readable sentence to a project's activity log whenever something changes (an issue is created, updated, or deleted; a comment is added; project columns are updated, notification settings are changed, and so on). Most calls pass a project, but some — like a settings change — pass `null` and just the acting user
+- **`NotificationService`** — for each [notification type](/concepts/notifications#notification-types), checks the recipient's per-channel preference via `NotificationSettingService` and fans out accordingly: `NotificationMailService` queues an email if the email channel is enabled, and a row is written to the `notifications` table if the in-app channel is enabled (independently — one can be on without the other)
 
 If you're adding a new mutating action, the pattern to follow is: validate in the controller, write the logic (including any activity log entry or notification) in a service, and push any new querying needs down into a repository — never build an Eloquent query inline in a controller or service.
 
 ## Authorization today
 
 There's no dedicated policy or gate layer (`app/Policies` doesn't exist). The one authorization check in place — verifying you own a comment or notification before deleting or updating it — is done inline in the controller with `abort_if`. See [Roles and permissions](/guides/roles-and-permissions) for what is and isn't enforced today.
+
+## Session lifetime enforcement
+
+`EnforceSessionLifetime`, registered as web middleware, stamps `last_activity_at` into the session on every authenticated request and compares it against the user's own `session_lifetime` column (in minutes, configurable from [Security & access](/concepts/account#security-and-access)). Once that window has passed, the middleware force-logs the user out and redirects to `/login` — this runs independently of Laravel's own `SESSION_LIFETIME` config value, which governs when the session cookie/store entry expires outright rather than per-user idle timeout.

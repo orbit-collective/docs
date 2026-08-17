@@ -27,6 +27,7 @@
         "group": "Core Concepts",
         "pages": [
           "concepts/account",
+          "concepts/settings",
           "concepts/projects",
           "concepts/issues",
           "concepts/comments",
@@ -43,6 +44,7 @@
           "guides/filtering-and-search",
           "guides/roles-and-permissions",
           "guides/onboarding",
+          "guides/appearance",
           "guides/keyboard-shortcuts",
           "guides/rich-text-editing"
         ]
@@ -89,6 +91,7 @@
         "group": "Core Concepts",
         "pages": [
           "concepts/account",
+          "concepts/settings",
           "concepts/projects",
           "concepts/issues",
           "concepts/comments",
@@ -105,6 +108,7 @@
           "guides/filtering-and-search",
           "guides/roles-and-permissions",
           "guides/onboarding",
+          "guides/appearance",
           "guides/keyboard-shortcuts",
           "guides/rich-text-editing"
         ]

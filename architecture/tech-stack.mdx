@@ -7,11 +7,12 @@ Orbit is a single Laravel application. There is no standalone REST or GraphQL AP
 
 ## Backend
 
-- **[Laravel 13](https://laravel.com)** (PHP 8.4+) — routing, Eloquent ORM, validation, sessions
+- **[Laravel 13](https://laravel.com)** (PHP 8.5+) — routing, Eloquent ORM, validation, sessions
 - **[Inertia.js for Laravel](https://inertiajs.com)** — controllers return page props via `Inertia::render(...)` instead of JSON; there's no `routes/api.php`
 - **SQLite** by default (`database/database.sqlite`), swappable for MySQL or PostgreSQL through standard Laravel `DB_*` environment variables
-- Session, cache, and queue all default to the `database` driver
+- Session, cache, and queue all default to the `database` driver — the queue is no longer optional infrastructure: a worker process must be running for [email notifications](/concepts/notifications#channels) to actually be delivered
 - **[Pest](https://pestphp.com)** for backend tests, run against an in-memory SQLite database
+- **[nsfwjs](https://github.com/infinitered/nsfwjs)**, run as a separate HTTP service, screens every uploaded [avatar](/concepts/account#profile) before it's accepted
 
 <Note>
   `laravel/sanctum` is a listed dependency but isn't wired up anywhere — no published config, no `HasApiTokens` on the `User` model, no token-guarded routes. It's a placeholder for a future token-based API, not something Orbit uses today.
@@ -21,7 +22,7 @@ Orbit is a single Laravel application. There is no standalone REST or GraphQL AP
 
 - **React 19** with TypeScript, bundled by **Vite**
 - **[Inertia.js React adapter](https://inertiajs.com)** — pages resolve by name from `resources/js/Pages/**/*.tsx` to match what a controller renders
-- **Tailwind CSS**, dark-theme-only, driven by CSS custom properties (`--accent-color`, `--bg-color`, and so on) consumed as Tailwind arbitrary values
+- **Tailwind CSS**, driven by CSS custom properties (`--accent-color`, `--bg-color`, and so on) consumed as Tailwind arbitrary values — supports Light, Dark, and System theme modes plus a configurable accent color, see [Appearance](/guides/appearance)
 - **[dnd-kit](https://dndkit.com)** — powers the Board view's drag-and-drop
 - **[Tiptap](https://tiptap.dev)** — the rich text editor used for issue descriptions and comments, storing content as markdown
 - **[Vitest](https://vitest.dev)** + Testing Library — frontend tests, colocated with components

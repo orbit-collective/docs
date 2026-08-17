@@ -10,7 +10,7 @@ This guide gets you from a fresh clone to a running Orbit instance with demo dat
 Before you begin, you must have one of the following:
 
 - **Docker** and Docker Compose (recommended — no local PHP or Node install needed), or
-- **PHP 8.4+** with Composer, and **Node.js** with npm, if you'd rather run Orbit natively
+- **PHP 8.5+** with Composer, and **Node.js** with npm, if you'd rather run Orbit natively
 
 ## Get started
 
@@ -35,7 +35,7 @@ Before you begin, you must have one of the following:
         make up
         ```
 
-        The app serves at [http://localhost:8000](http://localhost:8000) with Vite HMR on port `5173`. Use `make dev` instead of `make up` to run in the foreground and watch logs.
+        The app serves at [http://localhost:8000](http://localhost:8000) with Vite HMR on port `5173`. This also starts the `queue` worker (needed for [email notifications](/concepts/notifications#channels)) and the `nsfwjs` avatar-moderation service — see [Docker](/deployment/docker#services) for the full list. `make up` runs in the foreground; use `make up-d` instead to run detached.
       </Step>
       <Step title="Seed demo data (optional)">
         ```bash

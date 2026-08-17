@@ -1,0 +1,43 @@
+---
+title: "Settings"
+description: "The Settings page's navigation, and which sections are actually built"
+---
+
+Settings is a dedicated page (`/settings`) with a persistent left sidebar, similar in feel to the Issue details page's layout. It replaced an earlier topbar-grid style of settings navigation.
+
+## Navigation
+
+The sidebar is split into two sections, **Account** and **Workspace**, each listing that section's tabs with an icon and short description. On small screens the sidebar collapses into a slide-in drawer instead of staying pinned.
+
+A tab is selected via a `tab` query parameter — `/settings?tab=notifications`, for example. Navigating straight to a tab that isn't enabled (see below) silently falls back to the default tab, **Preferences**.
+
+## Tabs
+
+Not every tab listed in the sidebar is functional yet — disabled ones are shown with a "Soon" badge so the full shape of Settings is visible, but they aren't clickable.
+
+### Account
+
+| Tab | Status | Covers |
+| --- | --- | --- |
+| Preferences | Available | Default issue view, interface theme, accent color — see [Appearance](/guides/appearance) |
+| Profile | Available | Display name, avatar — see [Account](/concepts/account#profile) |
+| Notifications | Available | Per-type, per-channel notification preferences — see [Notifications](/concepts/notifications) |
+| Security & access | Available | Password, sessions, session lifetime, account deletion — see [Account](/concepts/account#security-and-access) |
+| Integrations | Soon | Connecting third-party tools |
+| Export | Soon | Downloading account-related data |
+
+### Workspace
+
+| Tab | Status | Covers |
+| --- | --- | --- |
+| Labels | Soon | Defining the label taxonomy used across issues |
+| Statuses | Soon | Configuring lifecycle statuses |
+| Priorities | Soon | Standardizing priority levels |
+| Templates | Soon | Reusable issue templates |
+| Documents | Soon | Workspace documentation structure |
+| Members | Soon | Viewing and managing team members |
+| Roles & management | Soon | Defining roles and administrative policies |
+
+<Note>
+  Every workspace-section tab is currently "Soon" — none of them are reachable yet. Everything workspace-related (labels, statuses, priorities) is still fixed and defined in code today, exactly as described in [Issues](/concepts/issues) and the [database schema](/architecture/database-schema).
+</Note>
