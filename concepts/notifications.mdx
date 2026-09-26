@@ -16,11 +16,12 @@ Notifications tell you when something relevant to you happens in Orbit. Each not
 | Issue labels changed | An assigned issue's labels change |
 | Issue dates changed | An assigned issue's start or end date changes |
 | Issue updated | An assigned issue changes in a way that doesn't match a more specific type above |
-| Issue mentioned | *(defined, not yet wired up — see below)* |
-| Project invited | *(defined, not yet wired up — see below)* |
+| Issue mentioned | Someone mentions you in a comment |
+| Project invited | Someone invites your email address to a project |
+| Integration activity | A Jira import you started finishes or fails |
 
 <Note>
-  `IssueMentioned` and `ProjectInvited` exist as notification types with their own default settings, but nothing in the app currently triggers them — there's no @mention parser in comments or descriptions, and no project invite flow to invite from. Don't take their presence in Settings as confirmation those features exist yet.
+  Issue-change notifications can go to the person making the change and to the current assignee. Orbit does not notify you twice when those are the same person. Assignment changes use the dedicated assigned or unassigned notification instead.
 </Note>
 
 Notifications are per-user — nobody sees anyone else's notifications, and there's no team-wide or broadcast notification.
@@ -32,7 +33,9 @@ Notifications are per-user — nobody sees anyone else's notifications, and ther
 | In-app | On | Shown in the notification bell; this is what existed before email support was added |
 | Email | Off | Sent via a queued job; requires a running [queue worker](/deployment/docker#services); rate-limited to 2 per second across the whole app |
 
-Each notification type has its own in-app and email toggle, so you might have "Issue assigned" emailed to you while "Issue commented" stays in-app only, for example. Whatever a type's channel setting resolves to, that's checked independently for every notification — an email that's disabled for a type is simply never sent, it isn't queued and skipped.
+Each notification type has its own in-app and email toggle. For example, you can receive assignments by email while keeping comment updates in-app only. Orbit checks both channel choices independently before delivering an alert.
+
+An invitation sent to an email address that does not have an Orbit account is different: Orbit sends the dedicated invitation email so the recipient can register and accept it. If the address already belongs to an Orbit user, the normal **Project invitations** channel preferences apply.
 
 <Warning>
   Email delivery depends on a queue worker actually running and processing jobs (`php artisan queue:work`, or the `queue` service in Docker — see [Docker](/deployment/docker)). If the worker isn't running, email notifications silently pile up in the `jobs` table instead of being delivered — in-app notifications are unaffected since those are written synchronously.
@@ -46,8 +49,11 @@ From **Settings → Account → Notifications**, every notification type is list
 
 Every notification has a type (success, info, warning, or error), a title, a message, and optionally a link to the page it relates to. From the notification list you can:
 
-- Open a notification's linked page
+- Show only unread notifications
+- Filter by **All**, **Success**, **Info**, **Warning**, or **Error**
+- Mark one unread notification as read
 - Mark all notifications as read at once
+- Open **View details** when the notification links to an issue, invitation, or settings page
 - Delete a notification you no longer need
 
 <Note>

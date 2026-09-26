@@ -3,16 +3,39 @@ title: "Comments"
 description: "Discuss an issue with your team, right where the work happens"
 ---
 
-Comments let you discuss an [issue](/concepts/issues) without leaving it. Each comment is plain text written by a single author and attached to one issue.
+Comments let you discuss an [issue](/concepts/issues) without leaving it. Each comment belongs to one author and appears in the issue's comment thread.
 
 ## Adding a comment
 
-Open an issue and add a comment from its comment thread. Adding or deleting a comment is also recorded in the project's [activity log](/concepts/activity-log) internally, though that log isn't currently viewable anywhere in the app.
+Open an issue, enter a message under its comment thread, and select **Post comment**. Adding, editing, or deleting a comment is recorded in the project's [Activity view](/concepts/activity-log).
+
+Comments preserve line breaks and can contain two richer elements:
+
+- **Mentions** of project members
+- **Images** inserted by pasting or dropping an image file
+
+Other markdown formatting is not rendered in comments.
+
+## Mentioning a project member
+
+Type `@` followed by part of a member's name. Orbit displays matching project members. Use the arrow keys or pointer to choose a person, then press `Enter` or `Tab`.
+
+The selected mention appears as a highlighted name with the member's avatar. When you post the comment, Orbit sends that member an [Issue mentioned notification](/concepts/notifications). Mentioning yourself does not send a notification.
+
+Mention suggestions are available while composing a new comment. The inline editor for an existing comment preserves and renders existing mentions, but does not offer the mention picker.
 
 ## Notifications
 
-If you comment on an issue you're not the assignee of, Orbit sends the assignee an [in-app notification](/concepts/notifications) so they know discussion is happening on their issue. Commenting on your own assigned issue doesn't notify yourself.
+If an issue has an assignee, Orbit sends them an **Issue commented** notification when someone else comments. Commenting on an issue assigned to you does not notify you about your own comment.
 
-## Deleting a comment
+Mention notifications are separate. A person explicitly mentioned can be notified even when they are not the assignee.
 
-You can delete your own comments. Orbit does not currently support editing a comment after it's posted, or deleting someone else's comment.
+## Editing and deleting comments
+
+Select comment text to edit it inline. Select away from the editor to save the change. Use the delete button that appears when you hover over a comment to remove it.
+
+Whether you can edit or delete a comment depends on your project role and custom permissions:
+
+- Members normally manage their own comments.
+- Owners and Admins normally manage any comment in the project.
+- A custom role can grant permission to update or delete your own comments or any comment separately.
