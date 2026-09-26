@@ -1,0 +1,67 @@
+---
+title: "Issue types"
+description: "Shape each project's work with types, permissions, and hierarchy rules"
+---
+
+Issue types define what kind of work an [issue](/concepts/issues) represents. Each project has its own catalog, and every type can have a distinct name, icon, color, description, workflow, hierarchy rules, templates, and fields.
+
+## Starter catalog
+
+Orbit supplies 16 system types as a starting point:
+
+| Type | Intended use |
+| --- | --- |
+| Task | A unit of work to complete |
+| Feature | A new capability or request |
+| Story | User-facing functionality |
+| Bug | Something that is not working as expected |
+| Epic | A large body of work made up of smaller issues |
+| Spike | A time-boxed investigation |
+| Chore | Maintenance without direct user impact |
+| Improvement | An enhancement to something that already exists |
+| Incident | An active production problem |
+| Security | A security concern or vulnerability |
+| Infrastructure | Infrastructure or tooling work |
+| Research | Open-ended exploration or analysis |
+| Experiment | A trial used to validate a hypothesis |
+| Documentation | Documentation work |
+| Design | Visual, layout, or interaction design work |
+| AI Task | Work intended for an AI agent |
+
+System types are project-specific. Editing one changes it only in the selected project.
+
+## Top-level and sub-issue types
+
+An issue type can be available for top-level issues, sub-issues, or both.
+
+- **Task**, **Feature**, **Story**, **Bug**, and **Epic** are top-level types by default.
+- The remaining starter types are sub-issue-only by default.
+- Types that allow children can be limited to specific child types.
+
+The quick-add row for top-level issues only offers types configured for top-level use. When adding a sub-issue, Orbit also checks the parent type's hierarchy rules.
+
+## Restrict who can create a type
+
+Owners and Admins can limit a type to selected built-in roles: Owner, Admin, Member, or Viewer. If no roles are selected, anyone who already has permission to create issues can use the type.
+
+These restrictions add to the normal **Create issues** permission; they do not replace it.
+
+## Manage issue types
+
+Open **Settings → Workspace → Issue types**, then select a project. From the catalog you can:
+
+- create a custom type with a name, icon, color, and optional description;
+- choose whether it supports children or can be used at the top level;
+- select built-in roles that may create it;
+- edit custom and system types when you have the relevant permission;
+- configure its workflow, hierarchy, templates, and fields.
+
+Owners and Admins can normally create, edit, and delete issue types. Custom roles can receive the view, create, edit, and delete permissions independently.
+
+## Deleting a type
+
+System types can be edited but cannot be deleted. A custom type can be deleted only when no issues use it, so reassign its issues to another type first.
+
+<Warning>
+  Deleting a custom issue type cannot be undone. Check its workflow, templates, fields, hierarchy rules, imports, and automations before removing it.
+</Warning>
