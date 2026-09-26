@@ -40,14 +40,16 @@ The **Field mapping** section lists values read from Jira. Map them to configura
 | Issue type | A project [issue type](/concepts/issue-types) |
 | Status | A status name from the project's type workflows |
 | Priority | Low, Medium, or High |
-| Label or component | A label from the project's [label catalog](/concepts/labels) |
+| Label | A label from the project's [label catalog](/concepts/labels) |
 
 Select **Save mapping** after making changes. You do not need to map every value:
 
 - an unmapped issue type first tries an Orbit type with the same name, then falls back to Task;
 - an unmapped status starts as open work in the imported type's workflow;
 - an unmapped priority becomes Medium;
-- an unmapped label or component is omitted.
+- an unmapped label is omitted.
+
+The importer also reads Jira components from each issue and applies the same saved label mapping when a component name matches one of its external values. Components are not listed as separate mapping choices, so a component without a matching saved mapping is omitted.
 
 The importer also brings over the Jira summary, description as plain text, due date, and issue hierarchy. Jira description formatting is not preserved.
 

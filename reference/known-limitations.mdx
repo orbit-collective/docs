@@ -1,50 +1,40 @@
 ---
 title: "Known limitations"
-description: "What Orbit doesn't do yet, in one place"
+description: "Current product boundaries and unavailable capabilities"
 ---
 
-Orbit is under active development, and a few things are either partially built or not built at all. Each of these is covered where it's relevant elsewhere in these docs — this page just collects them in one place so you don't have to piece it together from individual callouts.
+Orbit is under active development. The following limits apply to the current user experience.
 
 ## No public or programmatic API
 
-Orbit is a session-authenticated Inertia monolith. `laravel/sanctum` is a dependency but isn't wired to any route, so there's no way to authenticate an external client or call Orbit outside the browser. See [Tech stack](/architecture/tech-stack#why-no-api).
-
-## Roles don't gate any actions
-
-The `admin` role is assigned automatically to the first registered account, but today it only affects which account sees the first-project onboarding flow. Admins and members can create, edit, and delete projects and issues equally — there's no policy layer enforcing role-based permissions. See [Roles and permissions](/guides/roles-and-permissions).
+Orbit's browser application does not expose a supported public API or an external-client authentication flow. See [Tech stack](/architecture/tech-stack#why-no-api).
 
 ## No email address changes
 
-Name, avatar, and password can all be changed after registering, and the account can be deleted — but there's still no way to change the email address you registered with, through the app itself. See [Account](/concepts/account#profile).
+You can change your name, avatar, and password and delete your account, but you cannot change the email address registered to it through Orbit. See [Account](/concepts/account#profile).
 
-## Most Settings sections are placeholders
+## Saved filters cannot be edited or context-isolated
 
-Only four of the Settings page's thirteen tabs actually do anything: Preferences, Profile, Notifications, and Security & access. Everything else — Integrations, Export, and the entire Workspace section (Labels, Statuses, Priorities, Templates, Documents, Members, Roles & management) — is visible in the navigation with a "Soon" badge but isn't reachable. See [Settings](/concepts/settings#tabs).
+Saved filters can be created and deleted, but not renamed or edited in place. Delete and recreate one to change it.
 
-## Mentions and project invites don't notify anyone
+Each saved filter belongs to a project, and project membership is enforced when creating or deleting it. Orbit stores a view context with the filter but does not currently use that context to separate the filters loaded within the project. See [Saved filters](/concepts/saved-filters#limitations).
 
-`IssueMentioned` and `ProjectInvited` exist as notification types, each with their own default channel settings, but nothing triggers either one — there's no @mention parsing in comments or descriptions, and no flow to invite someone to a project. See [Notifications](/concepts/notifications#notification-types).
+## Most integration cards are previews
 
-## Activity log has no UI
+Discord, Jira, and GitHub are available. Most other cards in the integration catalog are marked **Soon**: you can read their overview, but you cannot enable or configure them. See [Integrations](/guides/integrations#available-and-coming-soon).
 
-Every mutating action is recorded internally as an activity log entry, but nothing in the app currently reads it back out — there's no page or panel that displays a project's history. See [Activity Log](/concepts/activity-log).
+## Automation conditions are flat
 
-## No image insertion in the description editor
-
-The issue description editor has Tiptap's image extension configured, but no toolbar button, paste handler, or drag-and-drop wiring exists to actually let you insert one. See [Writing issue descriptions](/guides/rich-text-editing#images).
-
-## Comments and saved filters are create/delete only
-
-Comments can't be edited after posting, and you can only delete your own. Saved filters can't be renamed or edited in place — deleting and re-saving is the only way to change one. See [Comments](/concepts/comments) and [Saved Filters](/concepts/saved-filters).
+Every condition in an automation rule must match. The builder has no OR branches or nested condition groups, so alternative paths require separate rules. The displayed **is one of (comma-separated)** operator also does not currently convert typed text to the list expected by the rule engine; use separate **equals** rules. See [Automation](/guides/automation#add-conditions).
 
 ## Keyboard shortcuts are incomplete
 
-`Ctrl+K` currently opens the same shortcuts help modal as `?` and `/`, rather than a distinct command palette. There's also no Mac-specific (`Cmd`) equivalent for any shortcut today. See [Keyboard shortcuts](/guides/keyboard-shortcuts).
+`Ctrl+K` opens the shortcuts help modal rather than a distinct command palette. Orbit also has no Mac-specific `Cmd` equivalents for its shortcuts. See [Keyboard shortcuts](/guides/keyboard-shortcuts).
 
 ## No push notifications
 
-Orbit supports in-app and email notifications, but nothing beyond that — no browser push, no mobile push. See [Notifications](/concepts/notifications).
+Orbit supports in-app and email notifications, but not browser or mobile push notifications. See [Notifications](/concepts/notifications).
 
 <Tip>
-  None of this is hidden or broken — it's simply not built yet. If you're picking a first contribution, several of these are natural starting points; see [Contributing](/architecture/contributing).
+  A control can also be absent or read-only because of the selected project's permissions; that is expected access control, not a product limitation. See [Roles and permissions](/guides/roles-and-permissions).
 </Tip>

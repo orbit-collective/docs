@@ -3,27 +3,32 @@ title: "FAQ and troubleshooting"
 description: "Common questions and setup issues"
 ---
 
-## Conceptual questions
-
-<Tip>
-  Several common "can I do X?" questions come down to something not being built yet — see [Known Limitations](/reference/known-limitations) for the full list in one place.
-</Tip>
+## Using Orbit
 
 <AccordionGroup>
   <Accordion title="Does Orbit have a public API?">
-    Not today — see [Known Limitations](/reference/known-limitations#no-public-or-programmatic-api).
+    Not today. Orbit's browser application does not expose a supported API for external clients. See [Known limitations](/reference/known-limitations#no-public-or-programmatic-api).
   </Accordion>
-  <Accordion title="What's the difference between the admin role and being a member?">
-    Less than you'd expect — see [Known Limitations](/reference/known-limitations#roles-dont-gate-any-actions).
+  <Accordion title="What's the difference between Owner, Admin, Member, and Viewer?">
+    These are project-level access tiers. Owners have full control, Admins manage the project, Members handle day-to-day work, and Viewers have read-only access. Custom roles can add permissions. See [Roles and permissions](/guides/roles-and-permissions).
   </Accordion>
-  <Accordion title="Can I view a history of changes made to a project?">
-    Not through the UI yet — see [Known Limitations](/reference/known-limitations#activity-log-has-no-ui).
+  <Accordion title="Why didn't the first registered account become an admin?">
+    Registration order does not grant a global role. The person who creates a project becomes that project's Owner; access to every other project comes from its membership and roles. See [Manage members and roles](/guides/members-and-roles).
   </Accordion>
-  <Accordion title="Can I change my email, password, or avatar after signing up?">
-    Name, password, and avatar — yes, from Settings → Account. Email address — not today. See [Known Limitations](/reference/known-limitations#no-email-address-changes).
+  <Accordion title="Can I view a history of project changes?">
+    Yes. Open the project and select **Activity** to see its 50 most recent recorded events. Your dashboard also shows recent work attributed to you. See [Activity log](/concepts/activity-log).
   </Accordion>
-  <Accordion title="Why didn't my first registered account become admin?">
-    The admin role only goes to the very first account in an empty `users` table. If you're testing this and it didn't happen, you likely registered against a database that already had a user in it — reset with `php artisan migrate:fresh` (or `make fresh` in Docker) and register again on a clean database.
+  <Accordion title="Can I change my email, password, or avatar?">
+    You can change your display name, password, and avatar from Settings. You cannot currently change the account email address. See [Account](/concepts/account) and [Known limitations](/reference/known-limitations#no-email-address-changes).
+  </Accordion>
+  <Accordion title="Why is a Settings page read-only or missing controls?">
+    Workspace settings are scoped to the selected project, and controls follow your permissions in that project. Confirm the project picker first, then ask its Owner or an Admin to change your base tier or custom roles. See [Settings](/concepts/settings#choose-a-project) and [Roles and permissions](/guides/roles-and-permissions).
+  </Accordion>
+  <Accordion title="Why didn't my Jira import update an existing issue?">
+    Orbit recognizes an imported issue by its saved Jira identity. Leave **Update already-imported issues** off to skip recognized items, or turn it on to overwrite their imported fields with the latest Jira values. Imports are manual and one-way. Check the final imported, updated, skipped, and failed counts; see [Import from Jira](/guides/jira-import#import-the-project-again).
+  </Accordion>
+  <Accordion title="Why isn't GitHub activity reaching Orbit?">
+    Open the project's GitHub card under **Settings → Workspace → Integrations**. For **Degraded**, try **Retry sync**; for **Needs attention** or **Disconnected**, reconnect the GitHub App. Also confirm the repository is listed and the pull request was first opened with exactly one Orbit issue marker. See [GitHub integration](/guides/github-integration#check-connection-health).
   </Accordion>
 </AccordionGroup>
 
@@ -31,19 +36,19 @@ description: "Common questions and setup issues"
 
 <AccordionGroup>
   <Accordion title="Blank page or 500 error right after cloning the repo">
-    This almost always means one of the setup steps was skipped: copying `.env.example` to `.env`, generating an app key (`php artisan key:generate`), or running migrations. Re-run `composer setup` (native) or `make setup` (Docker) — see [Quickstart](/quickstart).
+    One of the setup steps may be missing: copying `.env.example` to `.env`, generating an application key, or running migrations. Re-run `composer setup` for a native setup or `make setup` for Docker; see [Quickstart](/quickstart).
   </Accordion>
-  <Accordion title="Frontend assets or styles look broken / missing">
-    Make sure you've actually run a frontend build (`npm run build`) or have the Vite dev server running (`npm run dev`, or `composer dev` / `make dev` which start it alongside the backend). Orbit's pages expect Vite-built assets to be present — the app won't render correctly with a `.env` set up but no frontend build.
+  <Accordion title="Frontend assets or styles look broken or missing">
+    Run a frontend build with `npm run build`, or keep the Vite development server running with `npm run dev`, `composer dev`, or `make dev`. The app needs Vite-built assets to render correctly.
   </Accordion>
-  <Accordion title="Vite hot reload stopped working (Docker)">
-    See the dedicated [troubleshooting note in the Docker guide](/deployment/docker#troubleshooting-stale-vite-hmr) — this is a known issue with the file watcher desyncing, especially on non-native storage.
+  <Accordion title="Vite hot reload stopped working in Docker">
+    See the [Docker troubleshooting steps](/deployment/docker#troubleshooting-stale-vite-hmr). File watching can lose synchronization, especially on non-native storage.
   </Accordion>
   <Accordion title="Wrong PHP or Node version">
-    Orbit needs PHP 8.5+ and Node.js 22+. If `composer setup` or `npm install` fails with dependency resolution errors, check your local versions before assuming it's a project bug.
+    Orbit needs PHP 8.5 or later and Node.js 22 or later. Check both local versions when dependency installation fails.
   </Accordion>
   <Accordion title="Email notifications aren't arriving">
-    Two separate things have to be true: `MAIL_MAILER` must point at a real driver (it defaults to `log`, which just writes to a log file instead of sending), and a queue worker must be running, since notification emails are always queued. See [Configuration](/deployment/configuration#mail-and-broadcasting) and the [Docker services list](/deployment/docker#services) for the `queue` container.
+    `MAIL_MAILER` must use a real mail driver—the default `log` driver only writes messages to a log—and a queue worker must be running. See [Configuration](/deployment/configuration#mail-and-broadcasting) and the [Docker services list](/deployment/docker#services).
   </Accordion>
 </AccordionGroup>
 

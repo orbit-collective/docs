@@ -9,6 +9,8 @@ Saved filters let you save a specific combination of search text, status, priori
 
 A saved filter belongs to a single [project](/concepts/projects) — it isn't shared across projects, since the criteria that make sense (which labels, which teammates) are usually project-specific.
 
+Orbit also stores the page context where the filter was created. That context is not currently enforced when filters are loaded, so all saved filters for the project can appear together. The current project issue views share the same filter controls, but context separation will matter if more filter surfaces are added later.
+
 ## Creating a saved filter
 
 <Steps>
@@ -25,4 +27,4 @@ A saved filter belongs to a single [project](/concepts/projects) — it isn't sh
 
 ## Limitations
 
-Saved filters can be created and deleted, but not renamed or edited in place — to change one, delete it and save a new filter with the updated criteria.
+Saved filters can be created and deleted, but not renamed or edited in place — to change one, delete it and save a new filter with the updated criteria. Anyone who can view the project can currently save or delete its filters; filters are project resources rather than private personal views.
