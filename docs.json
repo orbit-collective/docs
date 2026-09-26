@@ -43,6 +43,7 @@
         "group": "Guides",
         "pages": [
           "guides/views",
+          "guides/workflows",
           "guides/filtering-and-search",
           "guides/roles-and-permissions",
           "guides/onboarding",
@@ -109,6 +110,7 @@
         "group": "Guides",
         "pages": [
           "guides/views",
+          "guides/workflows",
           "guides/filtering-and-search",
           "guides/roles-and-permissions",
           "guides/onboarding",

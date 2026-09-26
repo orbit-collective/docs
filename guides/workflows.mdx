@@ -1,0 +1,64 @@
+---
+title: "Configure workflows"
+description: "Define statuses and allowed transitions for each issue type"
+---
+
+Each [issue type](/concepts/issue-types) has its own workflow. A workflow defines the statuses an issue can use, where new issues begin, and which status changes are allowed.
+
+Owners and Admins can normally manage workflows. A custom role needs the **Manage workflows** permission.
+
+## Open a workflow
+
+1. Open **Settings → Workspace → Issue types**.
+2. Select the project you want to configure.
+3. Find an issue type and select its workflow action.
+
+Changes apply only to that type in the selected project. For example, editing the Bug workflow does not change Feature issues or Bugs in another project.
+
+## Add and order statuses
+
+In the **Flow** section, enter a status name, choose its broad category and color, then select **Add status**. Status names must be unique within that workflow and can contain up to 50 characters.
+
+Drag statuses by their handles to arrange the flow. The order controls how statuses are presented and which matching status Orbit chooses first when a broad status category must be resolved.
+
+Each workflow has exactly one starting status. Select the flag beside another status to make it the starting point for newly created issues of that type.
+
+<Note>
+  A workflow must keep at least one status. You cannot delete a status while issues use it; move those issues first. If you remove the starting status, Orbit makes the first remaining status the new starting point.
+</Note>
+
+## Choose a category
+
+Every detailed status belongs to one of three broad categories:
+
+| Category | Meaning | Board column |
+| --- | --- | --- |
+| To Do | Work that has not started | Open |
+| In Progress | Active work | In Progress |
+| Done | Finished or otherwise closed work | Done |
+
+Categories let shared views and filters summarize different workflows consistently. A Bug status named **Triaged** and a Story status named **Ready** can both belong to **To Do**, while keeping their more precise names on the issue.
+
+## Configure transitions
+
+A transition allows an issue to move directly from one status to another. In the **Transitions** section, each row starts with a **From** status:
+
+- select a destination chip to allow that move;
+- select an allowed destination again to remove the transition;
+- add the reverse direction separately if issues must be able to move back.
+
+Transitions are directional. Allowing **To Do → In Progress** does not automatically allow **In Progress → To Do**.
+
+## Resolve a dead end
+
+Orbit marks a status with **No transitions** when it has no outgoing moves. This can be intentional for a terminal state such as **Done**. If people should be able to leave the status, add at least one destination in the transition list.
+
+Before removing an existing transition, check whether it is the only path out of a status. An attempted status change that has no allowed transition is rejected.
+
+## Workflows on Board
+
+The Board's status grouping stays intentionally broad: **Open**, **In Progress**, and **Done**. It does not create one column for every detailed workflow status.
+
+When you drag a card between status columns, Orbit maps the destination category to the first matching status in that issue type's workflow. The move succeeds only if the workflow allows a transition from the issue's current detailed status. If it does not, Orbit restores the card to its previous column.
+
+For an exact status change, open the issue and choose one of the destinations allowed by its workflow.

@@ -23,9 +23,9 @@ The default, table-style view. It's the most powerful view for working through a
 A drag-and-drop board that can group issues by **Priority** or broad **Status** category. Orbit remembers the selected grouping in your browser.
 
 - Priority columns are **High Priority**, **Medium Priority**, and **Low Priority**.
-- Status columns are **Open**, **In Progress**, and **Done**. These are broad categories. An issue can still display a more specific workflow status on its detail page.
+- Status columns are **Open**, **In Progress**, and **Done**. These are broad categories, not one column per detailed workflow status. An issue still displays its type-specific status on its detail page.
 
-Drag a card into another column to change the field used for grouping. Orbit rejects the move and restores the card if your role cannot make that change or the target status is not allowed.
+Drag a card into another column to change the field used for grouping. In status mode, Orbit maps the destination category to a status in the issue type's [workflow](/guides/workflows). It rejects the move and restores the card if your role cannot make that change or the workflow does not allow the transition.
 
 ## Calendar
 
