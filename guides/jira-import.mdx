@@ -1,0 +1,80 @@
+---
+title: "Import from Jira"
+description: "Connect Jira Cloud, map fields, and import a project into Orbit"
+---
+
+Orbit can import issues from one Jira Cloud project into an Orbit [project](/concepts/projects). The import is a manual, one-way operation: it runs when you select **Import**, not continuously in the background.
+
+You need **Manage integrations** access in Orbit and Jira credentials that can read the source project and its metadata.
+
+## Prepare Jira credentials
+
+Before opening Orbit, collect:
+
+- **Jira instance URL** — the root URL in the form `https://your-domain.atlassian.net`
+- **Account email** — the email for the Jira account used by the import
+- **API token** — a Jira Cloud API token for that account
+
+<Warning>
+  Treat the API token as a secret. Do not paste it into an issue, comment, screenshot, or support request. Orbit does not display the saved email or token after connecting; reconnecting requires entering them again.
+</Warning>
+
+## Connect Jira
+
+1. Open **Settings → Workspace → Integrations**.
+2. Choose the destination Orbit project.
+3. Filter to **Developer tools** and open **Jira**.
+4. Enter the instance URL, account email, and API token.
+5. Select **Connect**.
+
+Orbit tests the credentials before saving them. After a successful connection, the panel shows the connected instance URL and loads Jira values for field mapping. Use **Reconnect** to replace the saved credentials later.
+
+The **Activate** control is separate from the credentials. A connection must have valid saved credentials before its mapping and import sections appear.
+
+## Map Jira fields
+
+The **Field mapping** section lists values read from Jira. Map them to configuration in the selected Orbit project:
+
+| Jira value | Orbit destination |
+| --- | --- |
+| Issue type | A project [issue type](/concepts/issue-types) |
+| Status | A status name from the project's type workflows |
+| Priority | Low, Medium, or High |
+| Label or component | A label from the project's [label catalog](/concepts/labels) |
+
+Select **Save mapping** after making changes. You do not need to map every value:
+
+- an unmapped issue type first tries an Orbit type with the same name, then falls back to Task;
+- an unmapped status starts as open work in the imported type's workflow;
+- an unmapped priority becomes Medium;
+- an unmapped label or component is omitted.
+
+The importer also brings over the Jira summary, description as plain text, due date, and issue hierarchy. Jira description formatting is not preserved.
+
+## Run the import
+
+1. Enter the Jira project key, such as `FE`.
+2. Leave **Update already-imported issues** off for a first import.
+3. Select **Import**.
+
+The import runs in the background. A live message reports the running totals for imported, updated, skipped, and failed items. When it finishes, Orbit shows the final counts; the Jira panel also retains a summary of the last run. If the whole job fails, check your Orbit notifications for the error.
+
+Imported work is created by the person who started the import. Orbit does not send one assignment notification or Discord message per imported issue; it reports the import as a batch instead.
+
+## Hierarchy and source identity
+
+Orbit resolves parent-child relationships after the issues are created, so a Jira subtask can still be attached when Jira returns it before its parent. If the current [hierarchy rules](/concepts/issue-types#configure-hierarchy) would reject a Jira relationship, Orbit widens the parent type to accept the imported child type while still preventing cross-project or circular relationships.
+
+Each imported issue keeps an internal link to its Jira identity, including the Jira key and source URL. Orbit uses that relationship to recognize the same item in a later run. The current issue page does not show a Jira backlink.
+
+## Import the project again
+
+With **Update already-imported issues** off, Orbit imports new Jira items and skips items it has already linked. This is the safer default because local edits remain untouched.
+
+Turn the option on when Jira should refresh already-imported issues. For every linked item returned in that run, Jira values overwrite the corresponding imported fields in Orbit, and the parent relationship is resolved again. New items are still imported normally.
+
+<Warning>
+  Re-importing with updates enabled can replace local changes on imported fields. It is not a merge, and Orbit does not push changes back to Jira.
+</Warning>
+
+Running an import does not create continuous synchronization. Repeat it manually whenever you want to pull another snapshot from Jira.
