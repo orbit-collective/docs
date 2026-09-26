@@ -1,0 +1,85 @@
+---
+title: "Automation"
+description: "Build project rules that respond to issue and GitHub events"
+---
+
+Automation rules respond to an issue or [GitHub](/guides/github-integration) event and run a sequence of actions on the related issue. Rules belong to one [project](/concepts/projects) and follow a simple flow: **When** one event occurs, **If** all conditions match, run each **Then** action in order.
+
+Owners, Admins, and Members can normally view a project's rules. Owners and Admins can create, edit, enable, disable, and delete them. A [custom role](/concepts/roles) can grant **View automation** and **Manage automation** separately; management also requires view access.
+
+## Create a rule
+
+1. Open **Settings → Automation** and choose a project.
+2. Select **New rule** (`+`) in the Rules column.
+3. Enter a clear name and leave the rule enabled if it should run immediately after saving.
+4. Select the **When** node and choose one trigger.
+5. Optionally select **Add condition**, then configure one or more conditions.
+6. Select **Add action**, choose an action, and configure it. Add more actions when needed.
+7. Drag action nodes to put them in the order in which they should run.
+8. Select **Save**.
+
+A rule must have a name, one trigger, and at least one action. Select an existing rule to edit it. The switch in the editor controls whether the rule is enabled; saving a disabled rule keeps its configuration without running it. Select **Delete** to remove the rule permanently.
+
+## Available triggers
+
+Each rule has exactly one trigger:
+
+- **Issue status changed**
+- **GitHub pull request opened**
+- **GitHub pull request reopened**
+- **GitHub pull request closed**
+- **GitHub pull request merged**
+- **GitHub pull request updated**
+
+GitHub triggers run only for pull requests already linked to an Orbit issue. See [Link a pull request to an issue](/guides/github-integration#link-a-pull-request-to-an-issue).
+
+## Add conditions
+
+A rule without conditions matches every event for its trigger. With conditions, every condition must match before any action runs. Conditions form one flat **AND** list; the current builder does not support **OR** branches or nested groups. Create separate rules when you need alternative paths.
+
+For **Issue status changed**, you can test the issue ID, new status, or previous status. GitHub pull request triggers expose issue, project, repository, and pull request details, including names, IDs, branches, state, title, URL, and pull request number.
+
+Choose one of these operators:
+
+- **equals**
+- **does not equal**
+- **contains**
+- **is one of (comma-separated)**
+
+Condition values are compared with the event data as entered. Use values that match Orbit or GitHub exactly, especially for status, repository, and branch names.
+
+<Warning>
+  In the current rule builder, **is one of (comma-separated)** does not convert the typed list into the array expected by the rule engine, so the condition does not match. Use **equals** in separate rules until list conditions are fixed.
+</Warning>
+
+## Available actions
+
+Actions run from top to bottom:
+
+| Action | Configuration and result |
+| --- | --- |
+| **Change status** | Move the issue to the first status in the selected To Do, In Progress, or Done category for its issue type. If that type has no status in the category, the action leaves the issue unchanged. |
+| **Change priority** | Set Low, Medium, or High priority. |
+| **Assign user** | Assign the issue to the project member identified by the entered user ID. |
+| **Add label** | Add the entered project label to the issue. |
+| **Remove label** | Remove the entered label from the issue. |
+| **Send notification** | Send the configured title and message to the issue's current assignee. If the issue is unassigned, no notification is sent. |
+
+Use label names that already exist in the project's [label catalog](/concepts/labels). Action order matters: for example, assign the issue before **Send notification** when the newly assigned person should receive it.
+
+## Default GitHub rules
+
+The first GitHub connection for a project adds two enabled rules:
+
+- **Move to in progress when a pull request opens** changes the linked issue to the first In Progress status available for its issue type.
+- **Move to done when a pull request merges** changes the linked issue to the first Done status available for its issue type.
+
+Orbit does not add a duplicate if a rule with the same name already exists. Reconnecting GitHub therefore preserves default rules you have edited or disabled. You can change or delete the defaults like any other rule, but reconnecting after deletion recreates a missing default rule.
+
+## Execution safeguards
+
+Orbit records each rule's execution for an incoming event. If GitHub retries the same delivery, the rule does not repeat its actions. This prevents duplicate labels, notifications, and other changes from one event.
+
+An action can cause another event—for example, **Change status** causes a status change—but Orbit does not start another automation while an automation is already running. This prevents rules from triggering each other in a loop. As a result, a rule triggered by **Issue status changed** does not run for a status change made by another automation.
+
+If one action cannot apply—for example, a selected status category does not exist for the issue type—the action can leave the field unchanged. Review the issue and its [workflow](/guides/workflows) when a rule ran but did not produce the expected result.
