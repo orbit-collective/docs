@@ -9,11 +9,11 @@ Anyone can register a new account from the sign-up page. Orbit validates:
 
 | Field | Rule |
 | --- | --- |
-| Name | Required, up to 255 characters |
+| Name | Required, 3–30 characters |
 | Email | Required, valid email format, must be lowercase, up to 255 characters, must be unique across all accounts |
 | Password | Required, must be confirmed (entered twice), must meet Laravel's default password rules |
 
-The very first account ever registered becomes an [admin](/guides/roles-and-permissions); every account after that is a regular member.
+Registration does not assign a global role. Roles belong to individual projects: creating a project makes you its Owner, while accepting an invitation gives you the base tier and custom roles chosen by the inviter. See [Roles and permissions](/guides/roles-and-permissions).
 
 ## Signing in and out
 

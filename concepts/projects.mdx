@@ -5,6 +5,8 @@ description: "The top-level container for issues in Orbit"
 
 A project is the top-level container in Orbit. It brings together issues, members, roles, [labels](/concepts/labels), saved filters, settings, integrations, automation, and a shared activity history.
 
+Project access is membership-based. Each member has one base tier and can also receive project-specific custom roles. See [Roles and permissions](/guides/roles-and-permissions) for the access model and [Manage members and roles](/guides/members-and-roles) for invitations and ownership.
+
 ## Fields
 
 - **Name** — the project's display name
@@ -26,7 +28,8 @@ Each project has its own configurable set of visible columns for its issue [List
 - **[Project labels](/concepts/labels)** — the names, colors, and descriptions available for categorizing issues
 - **[Saved filters](/concepts/saved-filters)** — reusable filter combinations, scoped to the project they were created in
 - **[Activity log](/concepts/activity-log)** — recent changes from project members, visible in the Activity view
+- **Members and roles** — the people who can access the project and the permissions they receive
 
 ## Creating a project
 
-Any authenticated user can create a project. The first project in a brand-new Orbit workspace is created as part of the [guided onboarding flow](/guides/onboarding) shown to the first (admin) account.
+Any authenticated user can create a project. Its creator becomes the Owner with full project access. Orbit also offers [guided project setup](/guides/onboarding#project-onboarding) to a user who does not yet belong to a project.

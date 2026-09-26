@@ -1,27 +1,66 @@
 ---
 title: "Roles and permissions"
-description: "How admin and member roles work in Orbit today"
+description: "How project access, base tiers, and custom grants work"
 ---
 
-Orbit has two roles: **admin** and **member**.
+Orbit controls access per [project](/concepts/projects). A person can own one project, be a Member of another, and have no access to a third.
 
-## How a role is assigned
+Every project member has one base tier. They can also hold any number of custom roles that add granular permissions.
 
-The very first account created in an Orbit workspace is automatically made an **admin**. Every account registered after that is a **member**. There's no way to change a user's role after registration through the app itself today.
+## Base tiers
 
-## What the admin role currently affects
+| Tier | Default access |
+| --- | --- |
+| Owner | Full, unconditional control of the project, including ownership transfer |
+| Admin | Project administration and day-to-day work |
+| Member | Create and manage issues, write comments, and view project configuration |
+| Viewer | Read-only access to the project, issues, members, and visible configuration |
 
-The admin role's practical effect today is narrow: the first (admin) account is shown a guided first-project setup as part of [onboarding](/guides/onboarding), presented specifically because the workspace has no projects yet.
+The person who creates a project becomes its Owner. This is unrelated to account registration order; Orbit has no global first-user administrator role.
 
-<Warning>
-  Orbit does not currently enforce role-based permissions on actions — an admin and a member can create, edit, and delete projects and issues equally. The role isn't (yet) a permissions system in the way "admin" implies in most tools; treat it as an identity for "the person who set this workspace up" rather than an access-control mechanism.
-</Warning>
+### Owner guarantees
 
-## What is enforced: ownership
+The Owner role always has every permission and cannot be edited. The Owner cannot be removed from the project or changed to another tier. To make someone else the Owner, use [Transfer ownership](/guides/members-and-roles#transfer-ownership).
 
-The one permission check Orbit does enforce, for every user regardless of role, is **ownership** of your own content:
+### Editable system roles
 
-- You can delete a [comment](/concepts/comments) only if you wrote it
-- You can mark as read, edit, or delete a [notification](/concepts/notifications) only if it's yours
+Admin, Member, and Viewer are system roles. Their permission sets can be adjusted from **Settings → Workspace → Roles and permissions**, but the roles themselves cannot be deleted. Some management actions also recognize the base tier directly, so removing an individual permission does not necessarily turn an Admin into a restricted custom role.
 
-Everything else — creating and editing projects, creating, editing, assigning, and deleting issues — is available to any authenticated user today.
+Use a lower base tier with custom roles when you need tightly scoped access.
+
+## Custom roles add access
+
+Create a custom role when the base tiers are too broad. Give it a name and slug, then enable the permissions it should grant. Permissions cover projects, members, roles, settings, integrations, automation, labels, issue types, issues, and comments.
+
+Custom roles are additive:
+
+- A member keeps every ability from their base tier.
+- Permissions from all assigned custom roles are combined.
+- A custom role can grant an ability, but it cannot deny one already supplied by the base tier or another role.
+- A person can hold several custom roles at once.
+
+Custom roles are scoped to one project. Creating or assigning a role in one project does not affect any other project.
+
+## Own and any comment permissions
+
+Comment moderation is split into separate abilities:
+
+- **Create comments** controls whether someone can add a comment.
+- **Edit own comments** and **Delete own comments** apply only to comments the person wrote.
+- **Edit any comment** and **Delete any comment** allow moderation of other people's comments.
+
+Members receive the own-comment abilities by default. Owners and Admins can normally edit or delete any comment. A custom role can grant these controls separately, which is useful for a moderator who should manage discussions without receiving broader project administration access.
+
+## Manage roles
+
+Open **Settings → Workspace → Roles and permissions**, then choose a project. Depending on your permissions, you can:
+
+- inspect the project roles and search the permission catalog;
+- create and rename custom roles;
+- enable one permission or an entire section at once;
+- edit the permissions of Admin, Member, Viewer, and custom roles;
+- delete custom roles.
+
+Role-management controls appear only when your own access allows the action. The general **Edit settings** permission also grants management access across the roles area.
+
+See [Manage members and roles](/guides/members-and-roles) to assign tiers and custom roles to people.

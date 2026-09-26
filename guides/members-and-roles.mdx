@@ -1,0 +1,62 @@
+---
+title: "Manage members and roles"
+description: "Invite people, change access, and transfer project ownership"
+---
+
+Membership is scoped to a project. Open **Settings → Workspace → Members**, then use the project picker to choose the team you want to manage.
+
+The page lists current members, their base tier, assigned custom roles, and join date. The controls you see depend on your own [role and permissions](/guides/roles-and-permissions).
+
+## Invite a member
+
+Email invitations require outgoing email to be configured for Orbit.
+
+1. Under **Invite by email**, enter one email address.
+2. Choose Admin, Member, or Viewer as the base tier.
+3. If you can assign roles, optionally select one or more custom roles.
+4. Select **Invite**.
+
+Repeat these steps for each additional person. Orbit currently sends one invitation per submission.
+
+An invitation lasts for seven days and must be accepted by an account with the invited email address. Someone without an account can register from the invitation flow; after signing in or registering, accepting the link adds them to the project with the selected roles.
+
+<Note>
+  Orbit cannot send invitations when email is disabled. A member who already has an invitation token can paste it into **Join with invitation code** on the Members page.
+</Note>
+
+## Manage pending invitations
+
+Owners and Admins can review pending invitations, including the inviter, base tier, custom roles, and expiration date. Select **Revoke** to invalidate an invitation before it is accepted.
+
+Sending another invitation to the same pending email replaces the earlier invitation with a new token and expiration date.
+
+## Change a member's access
+
+Open the role control beside a member to:
+
+- change their base tier to Admin, Member, or Viewer;
+- assign or remove any project-specific custom roles.
+
+Changing the base tier replaces the member's previous system role but keeps separately assigned custom roles. Custom-role controls require **Assign roles** access, which is separate from changing a base tier.
+
+The Owner's base tier cannot be changed. Other controls may be hidden or disabled when your role does not grant the required member or role-management permission.
+
+## Remove a member
+
+Owners and Admins can normally remove any non-owner member by selecting the remove button beside that person. Removing membership also removes the person's role assignments for that project; it does not delete their Orbit account.
+
+The Owner must transfer ownership before they can be removed.
+
+## Transfer ownership
+
+Only the current Owner can transfer ownership:
+
+1. In the **Ownership** section, select **Transfer ownership**.
+2. Choose an existing project member.
+3. Confirm the transfer.
+
+The selected member becomes Owner with full, unconditional control. The previous Owner becomes an Admin. Ownership transfer is project-specific and does not affect either person's access elsewhere.
+
+<Warning>
+  The new Owner can delete the project and transfer ownership again. Review the selected person before confirming.
+</Warning>

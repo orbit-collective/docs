@@ -1,18 +1,22 @@
 ---
 title: "Onboarding"
-description: "The guided flows new users and new workspaces see"
+description: "The guided flows shown when you first use Orbit"
 ---
 
-Orbit has two separate onboarding flows, each shown once and tracked independently per user.
+Orbit tracks two onboarding flows independently for each account.
 
 ## Welcome onboarding
 
-Every new user sees a general welcome walkthrough the first time they sign in, introducing the parts of the app they'll use day to day. Once you finish it, it won't show again for your account.
+Every new user sees a general welcome walkthrough the first time they sign in. It introduces the main parts of the app. Completing it prevents the walkthrough from appearing again for that account.
 
-## First-project onboarding
+## Project onboarding
 
-If the workspace has no projects yet, the account that created it (the [admin](/guides/roles-and-permissions)) is guided through creating the very first project — name, description, and color — instead of landing on an empty dashboard. This flow only appears while the workspace has zero projects; as soon as one exists, new accounts skip straight to the regular welcome onboarding.
+After the welcome walkthrough, Orbit offers project setup when you have not completed project onboarding and do not yet belong to any projects. You can create a project with a name, description, and color, or skip the flow.
 
-## Re-triggering onboarding
+Creating a project makes you that project's [Owner](/guides/roles-and-permissions#base-tiers). Registration order does not create a global Admin account.
 
-Both onboarding flows are tracked as a completed flag on your account, not something you can reset from the UI. If you need to see them again — for example, while writing documentation or testing — that requires resetting the flag directly on the account.
+If you register or sign in through a valid invitation, Orbit adds you to the invited project instead. The project onboarding prompt is not shown while you already belong to a project.
+
+## Show onboarding again
+
+The two completion states are saved on your account. Orbit does not currently provide a setting to reset either flow from the interface.
