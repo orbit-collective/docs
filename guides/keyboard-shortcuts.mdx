@@ -3,7 +3,7 @@ title: "Keyboard shortcuts"
 description: "Move around Orbit without touching the mouse"
 ---
 
-Orbit registers a small set of global keyboard shortcuts, available anywhere in the app.
+Orbit builds its shortcut list from the controls available on the page. Global shortcuts are always registered. Project and component shortcuts appear only while the relevant interface is open.
 
 ## Available shortcuts
 
@@ -12,7 +12,20 @@ Orbit registers a small set of global keyboard shortcuts, available anywhere in 
 | `?` or `/` | Open the keyboard shortcuts help modal |
 | `Alt` + `P` | Go to Projects |
 | `Alt` + `B` | Go to the Dashboard |
-| `Ctrl` + `F` | Focus the page's search input |
+| `Ctrl` + `F` | Focus the first text search input on the page |
+| `P` | Open the new-project form |
+
+On a project page, these shortcuts are also registered:
+
+| Shortcut | Does |
+| --- | --- |
+| `1` | Open List |
+| `2` | Open Board |
+| `3` | Open Calendar |
+| `4` | Open Activity |
+| `C` or `Ctrl` + `I` | Focus the inline new-issue row when List is mounted |
+
+Some menus add their own shortcut while mounted. For example, `Alt` + `S` opens a selection menu when that component is available. Open shortcut help to see the exact live list for your current page.
 
 <Note>
   `Ctrl+K` is currently wired to the same help modal as `?` and `/`, rather than a separate command palette — if you're expecting a distinct "jump to anything" command palette bound to `Ctrl+K`, that doesn't exist yet; it just opens the shortcuts list.
@@ -24,7 +37,7 @@ Orbit registers a small set of global keyboard shortcuts, available anywhere in 
 
 ## The shortcuts help modal
 
-Press `?` or `/` anywhere to open a searchable list of every shortcut, grouped by category, with each key combo shown as a keycap-style badge. Use `↑`/`↓` to move through the list, `↵` to run the highlighted shortcut, and `Esc` to close it.
+Press `?` or `/` anywhere to open a searchable list of the shortcuts currently registered, grouped by category, with each key combination shown as a keycap-style badge. Use `↑`/`↓` to move through the list, `Enter` to run the highlighted shortcut, and `Esc` to close it.
 
 ## When shortcuts don't fire
 

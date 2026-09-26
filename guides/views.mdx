@@ -1,9 +1,11 @@
 ---
-title: "List, Board, and Calendar views"
-description: "Three ways to look at the same issues"
+title: "List, Board, Calendar, and Activity views"
+description: "Four ways to work with a project's issues and history"
 ---
 
-Every project shows the same underlying [issues](/concepts/issues) through three interchangeable views. Switching views doesn't change your data — it changes how you look at it. Your choice of view is remembered locally in your browser, so each project opens the way you last left it.
+Every project offers four views. List, Board, and Calendar present the project's [issues](/concepts/issues), while Activity presents its [history](/concepts/activity-log). Switching views does not change your data.
+
+Choose your default under **Settings → Account → Preferences**. That preference is stored in your browser and applies when you open a project. Switching tabs on a project changes the current view without replacing your saved default.
 
 ## List
 
@@ -13,20 +15,36 @@ The default, table-style view. It's the most powerful view for working through a
 - **Searchable** by title, description, ID, or labels
 - **Filterable** by status, priority, labels, and assignee — including a filter for unassigned issues
 - **Paginated** on the server, so large projects stay fast
-- **Configurable columns** — show or hide columns per [project](/concepts/projects#table-columns)
+- **Hierarchical** — expand and collapse parent issues to review their sub-issues
+- **Configurable** — show, hide, and resize columns, including the issue type column, and choose a compact, comfortable, or spacious row height
 
 ## Board
 
-A drag-and-drop Kanban board, grouped into columns by status (`Open`, `In Progress`, `Closed`). Drag a card to a different column to change that issue's status immediately — no need to open the issue and edit its status field by hand.
+A drag-and-drop board that can group issues by **Priority** or broad **Status** category. Orbit remembers the selected grouping in your browser.
 
-<Tip>
-  The Board view is the fastest way to update status for several issues in a row, since each drag is a single action.
-</Tip>
+- Priority columns are **High Priority**, **Medium Priority**, and **Low Priority**.
+- Status columns are **Open**, **In Progress**, and **Done**. These are broad categories. An issue can still display a more specific workflow status on its detail page.
+
+Drag a card into another column to change the field used for grouping. Orbit rejects the move and restores the card if your role cannot make that change or the target status is not allowed.
 
 ## Calendar
 
-Lays issues out on a calendar using their start and end dates, so you can see what's scheduled for a given day or week at a glance. Issues without a start date don't appear on the calendar — set one from the List or Board view, or from the issue's own page, to place it.
+Calendar lays issues out from their start and end dates. An issue appears on every day in its date range. An issue without a start date does not appear, even if it has an end date.
+
+- Switch between **Month** and **Week**.
+- Use the arrows to move to the previous or next period, or select **Today**.
+- Use the colored edge on each issue to read its priority.
+- Hover over an issue for a preview, or select it to open the issue page.
+- Review open issues with an end date in **Upcoming Deadlines**, including overdue work.
+
+The Calendar uses every issue that matches the current search and filters, rather than only one List page.
+
+## Activity
+
+Activity shows the 50 latest changes recorded for the project. Entries identify who made a change and when it happened. Changes made by the same person within the same minute are grouped together.
+
+The search and issue filter bar is hidden in this view because Activity shows events, not issue rows. See [Activity log](/concepts/activity-log) for the details.
 
 ## Switching views
 
-Use the view switcher at the top of a project to move between List, Board, and Calendar. The same [filters and saved filters](/guides/filtering-and-search) apply across List; Board and Calendar always show the full set of issues currently visible in that project.
+Use the tabs at the top of a project or press `1`, `2`, `3`, or `4` to open List, Board, Calendar, or Activity. The [search, filters, and saved filters](/guides/filtering-and-search) remain available in List, Board, and Calendar.
