@@ -39,7 +39,7 @@ Before you begin, you must have one of the following:
         make up
         ```
 
-        The app serves at [http://localhost:8000](http://localhost:8000) with Vite HMR on port `5173`. This also starts the `queue` worker (needed for [email notifications](/concepts/notifications#channels)) and the `nsfwjs` avatar-moderation service — see [Docker](/deployment/docker#services) for the full list. `make up` runs in the foreground; use `make up-d` instead to run detached.
+        The app serves at [http://localhost:8000](http://localhost:8000) with Vite HMR on port `5173`. This also starts the `queue` worker for background jobs and email, the `scheduler` used by GitHub synchronization, and the `nsfwjs` image-moderation service. See [Docker](/deployment/docker#services) for the full list. `make up` runs in the foreground; use `make up-d` instead to run detached.
       </Step>
       <Step title="Seed demo data (optional)">
         ```bash
@@ -91,9 +91,10 @@ Before you begin, you must have one of the following:
 
 Once Orbit is running:
 
-1. Register an account at `/register`. The **first account created becomes an admin**; everyone who registers after that is a regular member.
-2. Follow the onboarding prompts to create your first project — give it a name, description, and color.
-3. Open the project and create an issue to see the List, Board, and Calendar views in action.
+1. Register an account at `/register`, or follow a project invitation link if a teammate invited you.
+2. Complete the welcome tour. If you don't belong to a project yet, Orbit also offers to create one with a name, description, and color.
+3. When you create a project, you become its **Owner**. Open it and add an issue from the List view.
+4. Explore the project's **List**, **Board**, **Calendar**, and **Activity** views, then open [Settings](/concepts/settings) to see the configuration available for that project.
 
 <Tip>
   Setup not going smoothly? Check the [FAQ](/reference/faq#setup-issues) for common issues, or open an issue on [GitHub](https://github.com/orbit-collective/orbit/issues).
@@ -101,4 +102,4 @@ Once Orbit is running:
 
 ## Next steps
 
-This guide covers local development. When you're ready to run Orbit somewhere real, see [Configuration](/deployment/configuration) and [Production deployment](/deployment/production).
+Learn how [issues](/concepts/issues) and [project views](/guides/views) work next. This guide covers local development; when you're ready to run Orbit somewhere real, see [Configuration](/deployment/configuration) and [Production deployment](/deployment/production).

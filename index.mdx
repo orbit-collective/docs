@@ -5,7 +5,7 @@ description: "An issue tracker and project management app for small teams"
 
 ![Orbit](https://shieldcn.dev/header/grid.svg?title=Orbit&subtitle=Create+projects%2C+track+issues+through+a+workflow%2C+and+see+progress+on+a+dashboard&logo=ri%3AFaProjectDiagram&size=wide&mode=dark&align=left&image=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1614850523459-c2f4c699c52e%3Fw%3D1600%26q%3D70%26fit%3Dcrop%26fm%3Djpg&overlay=1)
 
-Orbit is a self-hosted issue tracker and project management app. Teams use it to organize work into projects, track issues through a lifecycle, and stay on top of what changed and who needs to act on it.
+Orbit is a self-hosted issue tracker and project management app. Teams use it to organize work into projects, adapt issue types and workflows to the way they work, and keep product and development activity connected.
 
 Orbit is a single Laravel + Inertia + React application — there's no separate backend API to deploy or a database service to provision beyond what Laravel already needs. Clone it, run one setup command, and you have a working tracker.
 
@@ -22,19 +22,25 @@ Orbit is a single Laravel + Inertia + React application — there's no separate 
 
 <CardGroup cols={2}>
   <Card title="Organize work into projects" icon="folder-tree">
-    Each project has its own name, color, and slug, and holds its own issues and [saved filters](/concepts/saved-filters).
+    Each project has its own members, roles, labels, issue types, integrations, automation rules, and [saved filters](/concepts/saved-filters).
   </Card>
-  <Card title="Track issues through a lifecycle" icon="list-check">
-    Issues move through **Open**, **In Progress**, and **Closed**, with priority, labels, an assignee, and an optional date range.
+  <Card title="Shape every kind of work" icon="list-check">
+    Give each issue type its own workflow, hierarchy rules, fields, and templates. Track priority, project labels, an assignee, and an optional date range on every issue.
   </Card>
   <Card title="Work the way you prefer" icon="table-columns">
-    Switch between a sortable, filterable **List**, a drag-and-drop **Board**, and a date-driven **Calendar** — all showing the same underlying issues.
+    Switch between a sortable **List**, workflow-aware **Board**, date-driven **Calendar**, and chronological **Activity** view.
   </Card>
-  <Card title="Stay in the loop" icon="bell">
-    Get notified in-app or by email, per notification type, when you're assigned an issue, when one of your issues changes, or when someone comments on it.
+  <Card title="Collaborate in context" icon="comments">
+    Discuss work with editable comments, mention project members, add images, and choose which updates arrive in-app or by email.
+  </Card>
+  <Card title="Connect your tools" icon="plug">
+    Send activity to Discord, import work from Jira, and connect GitHub pull requests and development status to Orbit issues.
+  </Card>
+  <Card title="Automate repeatable work" icon="bolt">
+    React to issue and GitHub events with rules that update fields, labels, assignees, and notifications.
   </Card>
   <Card title="See the whole workspace at a glance" icon="chart-line">
-    The [dashboard](/concepts/dashboard) rolls up every project into stat cards, a priority breakdown, a completion ratio, and a weekly productivity trend.
+    The [dashboard](/concepts/dashboard) rolls up your projects into stat cards, visual summaries, a productivity trend, and recent activity.
   </Card>
 </CardGroup>
 
@@ -47,7 +53,7 @@ Orbit is a monolith, not a client that talks to a separate API — see the [tech
 - **[Database](/architecture/database-schema)** — SQLite by default, swappable for MySQL or PostgreSQL through standard Laravel environment variables.
 
 <Tip>
-  New to the codebase? Start with the [Quickstart](/quickstart) to get Orbit running, then explore the app itself — creating a project and an issue will make the rest of these docs click into place. If a term in these docs isn't clear, check the [glossary](/reference/glossary); if something isn't working the way you expect, check the [FAQ](/reference/faq) or the [known limitations](/reference/known-limitations).
+  New to Orbit? Start with the [Quickstart](/quickstart), create a project and an issue, then explore [issue views](/guides/views) and [Settings](/concepts/settings). If a term isn't clear, check the [glossary](/reference/glossary). For troubleshooting, see the [FAQ](/reference/faq) and [known limitations](/reference/known-limitations).
 </Tip>
 
 Orbit is open source under the [MIT license](https://github.com/orbit-collective/orbit/blob/master/LICENSE).
