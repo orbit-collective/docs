@@ -1,0 +1,58 @@
+---
+title: "Integrations"
+description: "Connect a project to Discord and other external services"
+---
+
+Integrations connect one Orbit [project](/concepts/projects) to external services. Open **Settings → Workspace → Integrations**, then choose the project you want to configure.
+
+All four base tiers can normally view a project's integration catalog. Enabling, disabling, or configuring a connection normally requires Owner or Admin access. Custom roles can grant **View integrations** and **Manage integrations** separately; management also requires view access.
+
+## Browse the catalog
+
+Use **All**, **Communication**, **Developer tools**, **Storage**, and **Productivity** to filter the cards. Each card shows its category, vendor, summary, and connection state. Open a card to see its longer overview, activity preview, vendor website, and configuration when available.
+
+The selected category only filters what you see; it does not change any connections.
+
+### Available and coming soon
+
+Available cards expose a connection or configuration panel. Discord, Jira, and GitHub are currently available, each with a different setup flow.
+
+Cards marked **Soon** are previews of planned connections. You can inspect their overview, but their toggle and configuration are locked. A card appearing in the catalog does not by itself mean the integration can be enabled.
+
+Integration state and credentials are project-specific. Connecting Discord for one project does not send activity from another project, and switching the project picker changes the catalog state you are viewing.
+
+## Connect Discord
+
+Discord receives Orbit activity through a channel webhook.
+
+1. In Discord, create a webhook for the channel that should receive Orbit messages and copy its URL.
+2. In Orbit, open the **Discord** integration card for the correct project.
+3. Paste the URL into **Webhook URL** and select **Save**.
+4. Turn on **Issue activity**, **Comment activity**, or both.
+5. Select **Connect** to enable delivery.
+
+The webhook field is masked. Someone with read-only integration access can see whether a webhook is configured, but not its value.
+
+<Warning>
+  A Discord webhook URL contains a secret token. Do not paste it into an issue, comment, screenshot, or support message. If it is exposed, delete or regenerate the webhook in Discord and save the replacement in Orbit.
+</Warning>
+
+### Choose Discord activity
+
+- **Issue activity** posts when an issue is created, assigned, unassigned, or updated. The Discord message includes a link back to the issue.
+- **Comment activity** posts new issue comments, including a shortened text preview and a link to the issue.
+
+Both options are off until you enable them. Disabling the Discord connection stops delivery without deleting the saved URL or option choices. Clearing the webhook field and saving removes the stored URL.
+
+## Troubleshoot Discord
+
+If messages do not appear:
+
+1. Confirm you selected the intended Orbit project.
+2. Open Discord's card and check that it says **Connected**.
+3. Confirm that **A webhook URL is configured** and that the relevant activity option is on.
+4. In Discord, check that the webhook still exists and can post to the selected channel.
+5. If the webhook was rotated or deleted, save a newly generated URL in Orbit.
+6. Trigger a new matching action; enabling the integration does not resend earlier activity.
+
+Webhook delivery runs in the background, so allow a short delay. When asking for help, share the project name, event type, and approximate time—but never the webhook URL.
