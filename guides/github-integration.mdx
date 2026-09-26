@@ -1,0 +1,87 @@
+---
+title: "GitHub integration"
+description: "Connect repositories and link development work to Orbit issues"
+---
+
+Connect GitHub to an Orbit [project](/concepts/projects) to link pull requests to issues and create branches or pull requests from an issue's Development section. The connection is project-specific: only repositories added to that project are available there.
+
+You need **Manage integrations** access to connect GitHub or change its repositories. Creating a branch or pull request from an issue also requires permission to update that issue.
+
+## Connect GitHub
+
+1. Open **Settings → Workspace → Integrations**.
+2. Choose the Orbit project you want to connect.
+3. Filter to **Developer tools** and open **GitHub**.
+4. Select **Connect with GitHub**.
+5. In the new browser tab, install or configure the Orbit GitHub App and grant it access to the repositories you need.
+6. Return to Orbit. The panel waits for installation to finish and then shows the connection and its repositories.
+
+If the installation is still open, Orbit shows **Waiting for the GitHub App installation to finish**. Select **Reopen install page** if you closed the GitHub tab before completing setup.
+
+## Manage connected repositories
+
+The connection card lists repositories currently connected to the project. Select **Add repository** to load other repositories accessible to the GitHub App installation, then choose one to add it. Select **Remove** beside a repository to stop using it in that Orbit project.
+
+If a repository is missing from the picker, update the GitHub App installation so it can access that repository, then open **Add repository** again. Repository access in GitHub and project membership in Orbit are separate controls.
+
+Select **Disconnect** to remove the project's GitHub connection. Existing development links remain part of issue history, but new pull requests are not linked and development actions are unavailable until you reconnect.
+
+## Link a pull request to an issue
+
+Add this hidden marker anywhere in the pull request description, replacing `123` with the numeric Orbit issue ID:
+
+```html
+<!-- orbit-issue:123 -->
+```
+
+When the pull request is opened in a connected repository, Orbit links it to the matching issue in the same project. GitHub receives a confirmation comment, and the pull request appears in the issue's **Development** section. A single issue can have multiple linked pull requests.
+
+<Warning>
+  Use exactly one Orbit issue marker in a pull request description. Orbit ignores a pull request with multiple markers, a missing issue, or an issue from a different project.
+</Warning>
+
+The marker creates the initial link only when the pull request is first opened. Adding it to an existing pull request—or closing and reopening that pull request—does not create the link. Create a new pull request with the marker, or create it from Orbit.
+
+## Create a branch from an issue
+
+Open an issue and find **Development**, then select **Create branch**. If several repositories are connected, choose the destination repository. Orbit suggests a branch name based on the issue ID and title; you can edit it before creating the branch.
+
+The branch is created from the repository's default branch. Orbit reports actionable errors when, for example, the name is invalid, the branch already exists, the repository is no longer connected, or the GitHub connection is unavailable.
+
+Creating a branch does not link it by itself. Create a pull request with the Orbit marker to show the development work on the issue.
+
+## Create a pull request from an issue
+
+In the issue's **Development** section, select **Create pull request** and provide:
+
+- the repository, when more than one is connected;
+- a pull request title;
+- the source branch;
+- the target branch, which defaults to `main` when left blank.
+
+Orbit uses the repository's pull request template as the description and appends the hidden issue marker automatically. If no template is found—or it cannot be loaded—the description explains that the pull request was created by Orbit. You do not need to add the marker yourself.
+
+After GitHub processes the opening event, the new pull request appears in Development. Orbit shows a clear error instead if GitHub rejects the branches or title, the repository is not connected to the project, or the connection cannot be used.
+
+## Read development status
+
+Each linked pull request opens GitHub in a new tab and can show:
+
+- its repository, number, title, source branch, and target branch;
+- **Open**, **Draft**, **Closed**, or **Merged** state;
+- **CI pending**, **CI passed**, or **CI failed** when GitHub reports checks;
+- **Approved**, **Changes requested**, or **Commented** when GitHub reports a review.
+
+GitHub webhook events keep linked pull request state, checks, and reviews synchronized. Orbit hides a badge when GitHub has not supplied that information; a missing badge does not mean a successful check or approval.
+
+Orbit does not merge, approve, close, or review a pull request. Use its link to perform those actions in GitHub.
+
+## Check connection health
+
+The GitHub panel reports **Healthy**, **Degraded**, **Needs attention**, or **Disconnected**. Open **Diagnostics** to see the last successful sync, last attempt, last failure, and pending event count.
+
+- For **Degraded**, select **Retry sync**. This is appropriate for a temporary synchronization failure.
+- For **Needs attention**, select **Reconnect**. A retry cannot repair an invalid connection.
+- For **Disconnected**, install or authorize the GitHub App again.
+
+After reconnecting, confirm that the required repositories are still listed. If events remain pending or a healthy connection does not receive new GitHub activity, record the project, repository, pull request number, and approximate event time when requesting help.
