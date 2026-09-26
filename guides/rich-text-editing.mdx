@@ -3,10 +3,10 @@ title: "Writing issue descriptions"
 description: "Formatting support in the issue description editor"
 ---
 
-An [issue's](/concepts/issues) description supports rich text formatting, written and stored as markdown.
+An [issue's](/concepts/issues) description supports rich text formatting and images. Orbit stores the content as markdown.
 
 <Note>
-  This applies to issue descriptions only. [Comments](/concepts/comments) are plain text — no formatting is applied to comment bodies.
+  The formatting shortcuts on this page apply to issue descriptions. [Comments](/concepts/comments) and issue type template descriptions use text areas instead, but they can still upload and display markdown images.
 </Note>
 
 ## How formatting works
@@ -31,6 +31,29 @@ The editor also supports tables, though there's no button or shortcut currently 
 
 Click a description to edit it; click away (or otherwise commit the change) to save it and return to a read-only view. The same editor renders both states — there's no separate "preview" component — so what you see while editing is what other people will see once you're done.
 
-## Images
+## Add images to an issue description
 
-The editor has image support built in, but there's currently no way to actually add an image through the UI — no upload button, no paste-to-insert, no drag-and-drop. Don't tell users they can drop an image into a description; that path doesn't exist yet.
+Paste one or more image files into a description, or drag them onto the description from your computer. Dropping onto a read-only description starts editing automatically and inserts the image near the drop position.
+
+Orbit uploads each file and inserts it into the description. An **Uploading image…** message remains visible while an upload is in progress, and the editor waits for pending uploads before closing. If you paste several images, Orbit keeps their order and continues with the remaining files if one fails.
+
+When you are not editing, select a rendered image to open the full file in a new browser tab.
+
+## Images in comments and templates
+
+The new-comment form and the inline editor for an existing comment accept pasted or dropped image files. Orbit inserts a markdown image at the current caret. Rendered comment images can be selected to open the full file in a new tab.
+
+Under **Settings → Workspace → Issue Types → Manage templates**, the template description also accepts pasted or dropped images. The text area shows the markdown reference; an issue created from that template renders the image in its description.
+
+## File and access requirements
+
+Uploaded files must be JPEG, PNG, GIF, or WebP images no larger than 5 MB. Orbit checks every image with its configured safety service before accepting it.
+
+The upload is rejected when:
+
+- The file type or size is invalid
+- The image fails the safety check
+- The safety service is unavailable
+- Your project role does not allow you to create or update the content that would use the image
+
+Orbit shows the returned reason in an alert. If the safety service is temporarily unavailable, try again later.
