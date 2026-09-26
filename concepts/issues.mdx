@@ -31,11 +31,21 @@ Changing an issue's type also moves it to the new type's initial status unless y
 
 ## Create an issue
 
-Use the full issue form when you want to set the description, type, assignee, priority, labels, dates, or other configured fields before creating the issue.
-
-For faster entry, select **New issue** in List. The inline row asks for a title and issue type, previews that type's initial status, and creates the issue with Medium priority and no assignee. You can fill in the remaining details afterward.
+In List, select **New issue** to open the inline row. Enter a title, choose an issue type, and press Enter. The row previews that type's initial status and creates the issue with Medium priority and no assignee. You can fill in the remaining details from the issue page afterward.
 
 Some types are only available for sub-issues. If a type is restricted to selected roles, Orbit checks your role when you create the issue.
+
+The type's first template is applied automatically and can prefill the description and labels. See [Issue types](/concepts/issue-types#create-templates) for template and required-field behavior.
+
+## Parent and sub-issues
+
+Types that allow children show a **Sub-issues** section on the issue page. Select **Add sub-issue**, enter a title, choose an allowed type, and press Enter. A sub-issue must stay in the same project as its parent, and Orbit prevents circular parent chains.
+
+The issue header shows clickable ancestors for nested work. In List, parent and child rows form an indented tree that you can collapse or expand. See [Configure hierarchy](/concepts/issue-types#configure-hierarchy) for the type-level rules.
+
+## Custom fields
+
+An issue type can add short text, long text, number, date, choice, checkbox, and link fields. They appear in the issue sidebar and are saved individually. Required fields are marked with an asterisk.
 
 ## Assignment and notifications
 

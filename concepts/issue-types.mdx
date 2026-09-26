@@ -40,6 +40,20 @@ An issue type can be available for top-level issues, sub-issues, or both.
 
 The quick-add row for top-level issues only offers types configured for top-level use. When adding a sub-issue, Orbit also checks the parent type's hierarchy rules.
 
+## Configure hierarchy
+
+Turn on **Allows sub-issues** in a type's general settings before configuring its hierarchy. Then open the hierarchy action for that type and choose which other types it accepts as children.
+
+If you leave every child type unselected, the parent accepts any issue type. Selecting one or more types limits the picker to those choices. An issue cannot be its own parent, use a parent from another project, or be moved beneath one of its own descendants.
+
+Create a child from the **Sub-issues** section on a parent issue. Enter a title, choose one of the allowed types, and press Enter. The child appears in the panel and uses the selected type's starting status, default template, and Medium priority.
+
+On a child issue, the page header shows its ancestor path so you can navigate back up the hierarchy. List renders available parents and children as an indented tree; use the chevron beside a parent to collapse or expand its visible descendants.
+
+<Note>
+  List builds its tree from the current page of results. If a parent is on another paginated page, its child appears as a top-level row on the page you are viewing.
+</Note>
+
 ## Restrict who can create a type
 
 Owners and Admins can limit a type to selected built-in roles: Owner, Admin, Member, or Viewer. If no roles are selected, anyone who already has permission to create issues can use the type.
@@ -57,6 +71,44 @@ Open **Settings → Workspace → Issue types**, then select a project. From the
 - configure its [workflow](/guides/workflows), hierarchy, templates, and fields.
 
 Owners and Admins can normally create, edit, and delete issue types. Custom roles can receive the view, create, edit, and delete permissions independently.
+
+## Require built-in fields
+
+In a type's general settings, you can require **Description**, **Assignee**, **Labels**, **Start date**, **End date**, or **Priority**. Orbit checks those values when an issue of that type is created. If someone later edits a required field, they cannot clear it.
+
+<Warning>
+  The current **New issue** and **Add sub-issue** rows collect only a title and type, while always supplying Medium priority. A required description or labels can be satisfied by the automatically applied template, but required assignee or date values cannot be entered in these rows.
+</Warning>
+
+## Add custom fields
+
+Use a type's fields action to add information beyond the built-in issue properties. Custom fields appear in the issue sidebar and can use these formats:
+
+| Field type | Use it for |
+| --- | --- |
+| Short text | A short free-form value |
+| Long text | Notes or longer answers |
+| Number | A numeric value |
+| Date | A calendar date |
+| Choice | One value from a configured list |
+| Checkbox | A yes-or-no value |
+| Link | A URL |
+
+Give each field a unique label within the type. For a Choice field, enter the available options as a comma-separated list. You can also add a hint that appears while a non-checkbox field is empty and mark a field as required.
+
+<Warning>
+  A required custom field must be provided when the issue is created, but the current inline creation rows do not expose custom fields. Keep custom fields optional if people need to create that type from Orbit's current UI.
+</Warning>
+
+## Create templates
+
+Templates give new issues of a type a reusable starting description and labels. A template can also store a default priority. Open the type's templates action to create, edit, or delete templates.
+
+Orbit lists templates by name and marks the first one **Applied by default**. When a new issue does not specify another template, that first template supplies any description or labels not already provided. References to labels that no longer exist in the project are ignored.
+
+The current quick-add rows always submit Medium priority, so a stored template priority does not replace it. Change the priority from the issue page after creation when needed.
+
+Template descriptions support markdown and the same [image uploads](/guides/rich-text-editing#images-in-comments-and-templates) as issue descriptions.
 
 ## Deleting a type
 
