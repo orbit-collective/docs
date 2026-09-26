@@ -1,43 +1,49 @@
 ---
 title: "Settings"
-description: "The Settings page's navigation, and which sections are actually built"
+description: "A map of personal and project settings in Orbit"
 ---
 
-Settings is a dedicated page (`/settings`) with a persistent left sidebar, similar in feel to the Issue details page's layout. It replaced an earlier topbar-grid style of settings navigation.
+Settings combines personal account preferences with project-scoped administration. Open it from the user menu in the main sidebar.
 
-## Navigation
+## Navigate Settings
 
-The sidebar is split into two sections, **Account** and **Workspace**, each listing that section's tabs with an icon and short description. On small screens the sidebar collapses into a slide-in drawer instead of staying pinned.
+Every available tab has its own path. Opening `/settings` redirects to `/settings/preferences`, and you can bookmark a tab such as `/settings/notifications` or `/settings/members` directly.
 
-A tab is selected via a `tab` query parameter — `/settings?tab=notifications`, for example. Navigating straight to a tab that isn't enabled (see below) silently falls back to the default tab, **Preferences**.
+On desktop, the main sidebar changes to show **Account** and **Workspace** sections while you are in Settings. You can collapse or expand the sidebar; Orbit remembers that choice in your browser. On smaller screens, use the menu button to open the navigation as a drawer.
 
-## Tabs
+Unavailable tabs stay visible with a **Soon** state but cannot be selected and do not have a working route.
 
-Not every tab listed in the sidebar is functional yet — disabled ones are shown with a "Soon" badge so the full shape of Settings is visible, but they aren't clickable.
+## Choose a project
 
-### Account
+Workspace settings belong to individual projects. Labels, Issue Types, Members, Roles & management, Integrations, and Automation use a project picker when you belong to more than one project.
 
-| Tab | Status | Covers |
+Selecting a project reloads the current tab with `?project=<id>` and changes only the project being configured. With one project, the picker is hidden. If the URL does not name one of your projects, Orbit selects the first project available to your account.
+
+The page can remain read-only or hide individual controls when your [roles and permissions](/guides/roles-and-permissions) do not allow a change.
+
+## Account tabs
+
+| Tab and path | Status | Covers |
 | --- | --- | --- |
-| Preferences | Available | Default issue view, interface theme, accent color — see [Appearance](/guides/appearance) |
-| Profile | Available | Display name, avatar — see [Account](/concepts/account#profile) |
-| Notifications | Available | Per-type, per-channel notification preferences — see [Notifications](/concepts/notifications) |
-| Security & access | Available | Password, sessions, session lifetime, account deletion — see [Account](/concepts/account#security-and-access) |
-| Integrations | Soon | Connecting third-party tools |
-| Export | Soon | Downloading account-related data |
+| Preferences — `/settings/preferences` | Available | Default issue view, theme, and accent color; see [Appearance](/guides/appearance) and [Views](/guides/views) |
+| Profile — `/settings/profile` | Available | Display name and avatar; see [Account](/concepts/account#profile) |
+| Notifications — `/settings/notifications` | Available | Per-event in-app and email delivery; see [Notifications](/concepts/notifications) |
+| Security & access — `/settings/security-access` | Available | Password, sessions, idle lifetime, and account deletion; see [Account](/concepts/account#security-and-access) |
+| Export — `/settings/export` | Soon | Account data exports are not available yet |
 
-### Workspace
+## Workspace tabs
 
-| Tab | Status | Covers |
+| Tab and path | Status | Covers |
 | --- | --- | --- |
-| Labels | Soon | Defining the label taxonomy used across issues |
-| Statuses | Soon | Configuring lifecycle statuses |
-| Priorities | Soon | Standardizing priority levels |
-| Templates | Soon | Reusable issue templates |
-| Documents | Soon | Workspace documentation structure |
-| Members | Soon | Viewing and managing team members |
-| Roles & management | Soon | Defining roles and administrative policies |
+| Labels — `/settings/labels` | Available | Project label catalog; see [Project labels](/concepts/labels) |
+| Issue Types — `/settings/issue-types` | Available | Types, [workflows](/guides/workflows), hierarchy, fields, and templates; see [Issue types](/concepts/issue-types) |
+| Priorities — `/settings/priorities` | Soon | Configurable priority levels are not available yet |
+| Documents — `/settings/documents` | Soon | Workspace document management is not available yet |
+| Members — `/settings/members` | Available | Membership, invitations, project details, and ownership; see [Manage members and roles](/guides/members-and-roles) |
+| Roles & management — `/settings/roles-management` | Available | Base and custom role permissions; see [Roles and permissions](/guides/roles-and-permissions) |
+| Integrations — `/settings/integrations` | Available | Connection status and configuration for external services |
+| Automation — `/settings/automation` | Available | Project automation rules, triggers, conditions, and actions |
 
 <Note>
-  Every workspace-section tab is currently "Soon" — none of them are reachable yet. Everything workspace-related (labels, statuses, priorities) is still fixed and defined in code today, exactly as described in [Issues](/concepts/issues) and the [database schema](/architecture/database-schema).
+  Workflows, hierarchy, fields, and templates are managed inside **Issue Types**. They are not separate Settings tabs.
 </Note>
