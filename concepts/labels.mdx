@@ -1,0 +1,55 @@
+---
+title: "Project labels"
+description: "Create a label taxonomy for each project's issues"
+---
+
+Labels describe and group the work in a [project](/concepts/projects). Each project has its own label catalog, so two projects can use different names, colors, and descriptions.
+
+## Starter labels
+
+The first time a project uses its label catalog, Orbit adds six starter labels:
+
+- **bug** — something is not working as expected
+- **feature** — a new capability or request
+- **performance** — speed, load, or resource usage
+- **design** — visual, layout, or interaction design
+- **ux** — usability and user-experience concerns
+- **chore** — maintenance without direct user impact
+
+These labels are starting points, not a fixed global list. They appear with a **System** badge, but an Owner or Admin can edit or delete them. Deleting one does not cause Orbit to recreate it later.
+
+## Manage a project's labels
+
+Open **Settings → Workspace → Labels**, then choose a project. The page shows the total number of labels and separates system and custom counts.
+
+To create a label:
+
+1. Select **New label**.
+2. Enter a unique name of up to 50 characters.
+3. Choose a color.
+4. Optionally describe when the label should be used.
+5. Select **Create label**.
+
+Use the edit button beside a label to change the same fields. Label descriptions can be up to 255 characters.
+
+Owners and Admins can normally create, update, and delete labels. Other members can view the catalog and use labels when their role allows issue changes. Custom roles can grant the create, update, and delete abilities independently.
+
+## Apply and filter labels
+
+An issue can have any number of labels, including none. Add or remove them from the issue page. List and Board display the assigned labels so you can scan categorized work without opening every issue.
+
+The [filter bar](/guides/filtering-and-search) always reads the selected project's current catalog. Choose several labels to find issues that contain any of them.
+
+## Rename or delete carefully
+
+Orbit stores a label's name on each issue. Renaming or deleting the catalog entry does not rewrite labels already present on existing issues.
+
+This means:
+
+- An issue can keep the old label name after a rename.
+- An issue can continue to display a deleted label until someone edits its labels.
+- Saved filters, templates, and integrations that refer to the old name may no longer match the current catalog.
+
+<Warning>
+  Before renaming or deleting a widely used label, review affected issues, saved filters, issue type templates, imports, and automation rules. Orbit does not migrate those references automatically.
+</Warning>
