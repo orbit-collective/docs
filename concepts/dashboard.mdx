@@ -1,36 +1,37 @@
 ---
 title: "Dashboard"
-description: "A workspace-wide overview of every project and issue"
+description: "An overview of the projects, issues, and activity available to you"
 ---
 
-The dashboard is Orbit's home page — it summarizes activity across **every** project you can see, rather than scoping to one project at a time like the [List, Board, and Calendar views](/guides/views) do.
+The dashboard is Orbit's home page. It summarizes the projects you belong to instead of focusing on one project like the [List, Board, Calendar, and Activity views](/guides/views).
 
 ## Stat cards
 
-Four tiles summarize the whole workspace at a glance, computed from every issue across every project:
+Four tiles summarize your available work:
 
 | Card | Shows |
 | --- | --- |
-| Active Projects | Total number of projects |
-| Open Issues | Issues not yet closed (`open` + `in_progress`) |
-| Critical Tasks | Issues with `High` priority |
-| Resolution Rate | Percentage of all issues that are `Closed`, with a progress bar |
+| Active Projects | The number of projects you belong to |
+| Open Issues | Issues that are not in a completed workflow category |
+| Critical Tasks | Issues with High priority |
+| Resolution Rate | The percentage of issues in a completed workflow category |
 
-## Visual breakdown cards
+## Visual summaries
 
-Below the stat cards, three more cards visualize the same issue set from different angles:
+Three cards show the same issue set from different angles:
 
-- **Completion ratio** — a ring chart showing the percentage of all issues that are closed, with a row of raw counts underneath for Open, In Progress, Closed, and Total.
-- **Priority breakdown** — a single stacked bar split by High/Medium/Low priority, with a legend showing the count and percentage for each.
-- **Productivity trend** — a 7-day bar chart (Monday through Sunday) of how many issues were updated each day **this week**. Today's bar is highlighted. This is the one chart on the dashboard that's time-scoped — the others reflect all issues regardless of when they were last touched.
+- **Completion ratio** compares completed issues with the total.
+- **Priority breakdown** splits issues into High, Medium, and Low priority.
+- **Productivity trend** shows how many issues were updated on each day of the current week. Today's bar is highlighted.
 
-## Recent work and projects directory
+## Recent work activity
 
-The bottom of the dashboard splits into two columns:
+**Recent Work Activity** shows the 15 latest [activity log](/concepts/activity-log) entries attributed to you. Each entry identifies the action, when it happened, and the member responsible. Changes made within the same minute are grouped together.
 
-- **Recent Work Activity** — the first 20 issues across the workspace, shown in the same table used by the List view.
-- **Projects Directory** — up to 3 of your projects, with a link to view all of them if you have more. If you have none yet, this shows a prompt to create your first one instead.
+This feed follows your own recent actions across Orbit. To see changes from everyone in a particular project, open that project and select **Activity**.
 
-<Note>
-  "Recent Work Activity" here refers to the issue table, not the internal per-project [activity log](/concepts/activity-log) — the two are unrelated, despite the similar name.
-</Note>
+## Projects directory
+
+The **Projects Directory** shows up to three projects you belong to. Select a card to open the project. If you belong to more than three projects, use **View all** to open the complete Projects page.
+
+If you do not belong to a project yet, the directory offers to create one. You can also join through a project invitation.

@@ -1,22 +1,42 @@
 ---
 title: "Activity log"
-description: "An audit trail of project and account activity, captured internally"
+description: "See a chronological record of changes in Orbit"
 ---
 
-Every mutating action — most of them scoped to a [project](/concepts/projects), a growing number scoped to your account instead — is written to a shared activity log as a short, human-readable sentence.
+The activity log turns changes in Orbit into short, readable entries. It is separate from [notifications](/concepts/notifications): an activity entry records what happened, while a notification calls a specific person's attention to an event.
 
-<Warning>
-  The activity log is captured but **not currently surfaced anywhere in the app's UI**. There's no page, sidebar, or panel that displays it today — it's written internally by the backend and has no corresponding read path in any controller. If you're looking for a visible history of what changed, this isn't it yet; treat it as an internal audit trail rather than a user-facing feature.
-</Warning>
+## Project Activity view
 
-## What gets logged
+Open a project and select **Activity** beside **List**, **Board**, and **Calendar**. The feed shows the 50 most recent events recorded for that project, newest first.
 
-Whenever a [service](/architecture/backend-architecture) completes a mutation, it calls into a shared logging service to record what happened, attributing the entry to the user who performed it and, when there is one, the project it occurred in.
+Each group includes:
 
-**Project-scoped entries** — issue creation, updates, and deletion; comment creation and deletion; project creation; and project column changes.
+- The member's avatar and name
+- A relative time, with the exact date and time available on hover
+- One or more descriptions of what changed
+- An icon and color that distinguish actions such as creating, updating, deleting, inviting, changing a role, configuring an integration, or running an automation
 
-**Account-scoped entries** — these have no project at all (`project_id` is `null` in the `activity_logs` table): changing your display name, uploading or resetting your avatar, changing your password, revoking a session (individually or all others), updating your session lifetime, deleting your account, and changing your [notification settings](/concepts/notifications). All of these live under [Settings](/concepts/settings) rather than inside a project.
+Changes made by the same person within the same minute are grouped together. This keeps a short burst of edits readable without hiding the individual actions.
 
-## Why this exists
+## Dashboard activity
 
-The data model supports both cases — an activity log entry optionally belongs to a project, and always has a body and (usually) a user — which makes this a natural extension point if a visible history or audit page is added in the future, whether that's a project's activity feed or an account-level security log. For now, it's worth knowing this data exists (for example, if you're debugging or querying the database directly) even though there's no in-app way to view it.
+The dashboard's **Recent Work Activity** panel shows the 15 latest actions attributed to you. This can include project work and account changes such as updating a password or session setting.
+
+Use a project's **Activity** view when you want the shared history for that project, including changes made by other members.
+
+## What gets recorded
+
+Orbit records activity for the work you manage in the app, including:
+
+- Creating, updating, assigning, and deleting issues
+- Adding, editing, and deleting comments
+- Changing project details and members
+- Inviting people and changing their roles or permissions
+- Managing labels, issue types, workflows, integrations, and automation rules
+- Updating account profile, security, and notification settings
+
+The wording varies with the action. Issue types, workflow statuses, members, and roles appear as recognizable badges or identities where the feed has enough context.
+
+<Note>
+  Orbit does not provide a separate account security-history page. Account-level entries can appear in your dashboard feed, but a project's Activity view contains only that project's history.
+</Note>
